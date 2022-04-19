@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import SquareIcon from "../components/SquareIcon.vue";
+import TagInfo from "../components/TagInfo.vue";
 </script>
 
 <template lang="pug">
 main(:class="$style.collection")
   SquareIcon(:icon="['fab', 'twitter']")
   font-awesome-icon.icon-md(:icon="['fa', 'circle-xmark']")
+  TagInfo(label="docker", type="b", :isDeletable="false")
+  TagInfo(label="container", type="b", :isDeletable="true")
 </template>
 
 <style module lang="stylus">

@@ -11,5 +11,15 @@ import { RouterLink, RouterView } from "vue-router";
   <RouterView />
 </template>
 
-<style>
+<style lang="stylus">
+@import "../node_modules/reset-css/reset.css"
+@import "./assets/base"
+
+body
+  font-family 'Roboto', sans-serif
+  background-color color-dark-02
+  color color-light
+  a
+      text-decoration none
+      color color-light
 </style>

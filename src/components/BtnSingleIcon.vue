@@ -1,5 +1,5 @@
 <template lang="pug">
-button(:class="[$style.btn, $style[type]]") {{ label }}
+button(:class="[$style.btn, type]") {{ label }}
   font-awesome-icon(
     :class="$style.icon",
     :icon="icon",
@@ -40,9 +40,4 @@ const emit = defineEmits<Emit>();
     .icon
         color color-dark
         transition color 0.3s
-
-.a
-    background-color color-main
-.b
-    background-color color-second
 </style>

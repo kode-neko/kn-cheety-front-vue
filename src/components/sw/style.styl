@@ -1,0 +1,65 @@
+@import "../../assets/base"
+square()
+    display inline-block
+    width 70px
+    position relative
+    padding 6px
+    z-index 1
+    box-sizing border-box
+btn(colorBack, colorBorder, colorText)
+    background-color colorBack
+    border 2px solid colorBorder
+    border-radius br-sm
+    color colorText
+    display inline-block
+    text-align center
+    position relative
+    box-sizing border-box
+    cursor pointer
+    text-transform uppercase
+tick(colorBack)
+    position absolute
+    background-color colorBack
+    width 70px
+    height 30px
+    padding 6px
+    top 0
+    left 0
+    z-index 0
+    box-sizing border-box
+
+.leftSide
+  animation moveLeft 0.3s both
+
+.rightSide
+  animation moveRight 0.3s both
+
+@keyframes moveRight
+  from
+    left 0
+  to 
+    left calc(50%)
+
+@keyframes moveLeft 
+  from 
+    left calc(50%)
+  to 
+    left 0
+
+.leftSideCont
+    animation moveLeftCont 0.3s both
+
+.rightSideCont
+    animation moveRightCont 0.3s both
+
+@keyframes moveRightCont
+    from
+        color color-light
+    to
+        color color-dark
+
+@keyframes moveLeftCont
+    from
+        color color-dark
+    to
+        color color-light

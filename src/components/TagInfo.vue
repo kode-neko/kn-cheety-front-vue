@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="[$style.tag, $style[type], 'trans-elevation']") {{ label }}
+div(:class="[$style.tag, type, 'trans-elevation']") {{ label }}
   if isDeletable
     font-awesome-icon(
       :class="$style.icon",
@@ -33,12 +33,6 @@ const emit = defineEmits<Emit>();
     padding 0 pd-sm
     color color-dark
     line-height 30px
-
-.a
-    background-color color-main
-.b
-    background-color color-second
-
 .icon
     color color-dark
     margin-left pd-sm

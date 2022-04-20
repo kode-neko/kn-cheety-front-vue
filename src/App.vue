@@ -19,7 +19,22 @@ body
   font-family 'Roboto', sans-serif
   background-color color-dark-02
   color color-light
+  font-size 18px
   a
       text-decoration none
       color color-light
+  button
+    border none
+    font-size 18px
+
+.trans-elevation
+  transform translate(0, 0)
+  transition transform 0.3s
+  &:hover
+      transform translate(-2px, -2px)
+
+.a
+    background-color color-main
+.b
+    background-color color-second
 </style>

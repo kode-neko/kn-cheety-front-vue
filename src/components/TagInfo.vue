@@ -1,7 +1,11 @@
 <template lang="pug">
-div(@click="click", :class="[$style.tag, $style[type]]") {{ label }}
+div(:class="[$style.tag, $style[type], 'trans-elevation']") {{ label }}
   if isDeletable
-    font-awesome-icon(:class="$style.icon", :icon="['fa', 'circle-xmark']")
+    font-awesome-icon(
+      :class="$style.icon",
+      :icon="['fa', 'circle-xmark']",
+      @click="() => emit('delete')"
+    )
 </template>
 
 <script setup lang="ts">
@@ -14,11 +18,11 @@ interface Props {
   type: Type;
   isDeletable: boolean;
 }
-interface Emits {
-  (e: "click", payload: Record<string, never>): void;
+interface Emit {
+  (e: "delete"): void;
 }
 const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
+const emit = defineEmits<Emit>();
 </script>
 
 <style lang="stylus" module>
@@ -29,14 +33,11 @@ const emit = defineEmits<Emits>();
     padding 0 pd-sm
     color color-dark
     line-height 30px
-    transform translate(0, 0)
-    transition transform 0.3s
-    &.a
-        background-color color-main
-    &.b
-        background-color color-second
-    &:hover
-        transform translate(-2px, -2px)
+
+.a
+    background-color color-main
+.b
+    background-color color-second
 
 .icon
     color color-dark

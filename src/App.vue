@@ -26,6 +26,9 @@ body
   button
     border none
     font-size 18px
+  input
+    &:focus
+      outline none
 
 .trans-elevation
   transform translate(0, 0)

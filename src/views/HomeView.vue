@@ -1,25 +1,10 @@
-<script setup lang="ts">
-import SquareIcon from "../components/SquareIcon.vue";
-import TagInfo from "../components/TagInfo.vue";
-import BtnIcon from "../components/BtnIcon.vue";
-import BtnWide from "../components/BtnWide.vue";
-import BtnSingleIcon from "../components/BtnSingleIcon.vue";
-import SwTypeForm from "../components/sw/SwTypeForm.vue";
-import SwVisualMode from "../components/sw/SwVisualMode.vue";
-
-const props = defineProps<{
-  msg: string;
-  msg02: string;
-}>();
-</script>
-
 <template lang="pug">
 div(:class="$style.collection")
   SquareIcon(:icon="['fab', 'twitter']")
   font-awesome-icon.icon-md(:icon="['fa', 'circle-xmark']")
   SwVisualMode(
     :valLeft="'moon'",
-    :valRight="'sun'"
+    :valRight="'sun'",
     :iconLeft="['fa', 'sun']",
     :iconRight="['far', 'moon']",
     @toggle="(side) => { msg2 = side; }"
@@ -47,8 +32,48 @@ div(:class="[$style.box]")
     @toggle="(side) => { msg = side; }"
   )
   p {{ msg }}
-  
+  InputReseteable(v-model="model.value01", placeholder="Patatas fritas verdes")
+  p {{ model.value01 }}
 </template>
+
+<script lang="ts">
+import SquareIcon from "../components/SquareIcon.vue";
+import TagInfo from "../components/TagInfo.vue";
+import BtnIcon from "../components/BtnIcon.vue";
+import BtnWide from "../components/BtnWide.vue";
+import BtnSingleIcon from "../components/BtnSingleIcon.vue";
+import SwTypeForm from "../components/sw/SwTypeForm.vue";
+import SwVisualMode from "../components/sw/SwVisualMode.vue";
+import InputReseteable from "../components/InputReseteable.vue";
+import { defineComponent, ref } from "vue";
+
+interface ModelHome {
+  value01: string;
+}
+
+export default defineComponent({
+  components: {
+    SquareIcon,
+    TagInfo,
+    BtnIcon,
+    BtnWide,
+    BtnSingleIcon,
+    SwTypeForm,
+    SwVisualMode,
+    InputReseteable,
+  },
+  props: {
+    msg: String,
+    msg02: String,
+  },
+  setup(props, { emit }) {
+    const model = ref<ModelHome>({ value01: "test" });
+    return {
+      model,
+    };
+  },
+});
+</script>
 
 <style module lang="stylus">
 @import "../assets/base"

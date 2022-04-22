@@ -24,6 +24,7 @@ div(:class="[$style.box]")
   BtnWide(label="Login", :icon="['fa', 'circle-xmark']", size="sm", type="a")
   BtnWide(label="Entrar", :icon="['fa', 'circle-xmark']", size="md", type="b")
   BtnSingleIcon(:icon="['fas', 'trash-can']", type="b")
+  BtnIconNoBack(:icon="['fas', 'magnifying-glass']", label="Search")
   SwTypeForm(
     :valLeft="'left'",
     :valRight="'right'",
@@ -39,8 +40,10 @@ div(:class="[$style.box]")
     placeholder="Insert tag name and press enter"
   )
   FilterTags(
-    :tagList="[ { label: 'docker', id: 1 }, { label: 'container', id: 2 } ]"
+    :tagList="[ { label: 'docker', id: 1 }, { label: 'container', id: 2 }, ]"
   )
+
+MenuDesktop
 </template>
 
 <script lang="ts">
@@ -54,6 +57,8 @@ import SwVisualMode from "../components/sw/SwVisualMode.vue";
 import InputReseteable from "../components/InputReseteable.vue";
 import InputTagList from "../components/InputTagList.vue";
 import FilterTags from "../components/FilterTags.vue";
+import MenuDesktop from "../components/menu/MenuDesktop.vue";
+import BtnIconNoBack from "../components/BtnIconNoBack.vue";
 import { defineComponent, ref } from "vue";
 
 interface Tag {
@@ -78,6 +83,8 @@ export default defineComponent({
     InputReseteable,
     InputTagList,
     FilterTags,
+    MenuDesktop,
+    BtnIconNoBack,
   },
   props: {
     msg: String,

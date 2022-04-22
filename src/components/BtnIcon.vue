@@ -34,7 +34,6 @@ const emit = defineEmits<Emit>();
 .btn
     color color-dark
     border-radius br-sm
-    transition color
     transition color 0.3s
     &:hover
         color color-light

@@ -1,10 +1,5 @@
 <template lang="pug">
-button(:class="[$style.btn, type]") {{ label }}
-  font-awesome-icon(
-    :class="$style.icon",
-    :icon="icon",
-    @click="() => emit('click')"
-  )
+button(:class="[$style.btn, $style[size], type]", @click="() => emit('click')") {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -12,9 +7,15 @@ enum Type {
   a,
   b,
 }
+enum Size {
+  sm,
+  md,
+}
 interface Prop {
+  label: string;
   icon: string[];
-  type: string;
+  size: Size;
+  type: Type;
 }
 interface Emit {
   (e: "click"): void;
@@ -24,20 +25,20 @@ const emit = defineEmits<Emit>();
 </script>
 
 <style lang="stylus" module>
-@import "../assets/base"
+@import "../../assets/base"
 .btn
+    color color-light
     border-radius br-sm
     transition color
-    display inline-block
-    height 30px
-    widows 30px
-    text-align center
+    display block
+    width 100%
+    transition color 0.3s
     &:hover
         color color-dark
         cursor pointer
-        .icon
-            color color-light
-    .icon
-        color color-dark
-        transition color 0.3s
+    &.sm
+        padding pd-sm
+    &.md
+        padding pd-md
+        font-weight bold
 </style>

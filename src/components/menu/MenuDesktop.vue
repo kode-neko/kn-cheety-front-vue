@@ -9,15 +9,36 @@ div(:class="$style.cont")
         size="sm",
         type="a"
       )
+      BtnIconNoBack(
+        type="a",
+        size="sm",
+        :icon="['fas', 'magnifying-glass']",
+        label="search"
+      )
   div(:class="$style.right")
+    BtnIconNoBack(type="a", size="md", :icon="['far', 'envelope']")
+    BtnIconNoBack(type="a", size="md", :icon="['fas', 'share-nodes']")
+    BtnIconNoBack(
+      type="a",
+      size="md",
+      :icon="['fas', 'arrow-right-from-bracket']"
+    )
+    SwTypeForm(
+      :valLeft="'moon'",
+      :valRight="'sun'",
+      :labelLeft="'Light'",
+      :labelRight="'Dark'",
+      @toggle="(side) => { msg2 = side; }"
+    )
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BtnIcon from "../BtnIcon.vue";
+import { BtnIcon, BtnIconNoBack } from "../btn";
+import SwTypeForm from "../sw/SwTypeForm.vue";
 
 export default defineComponent({
-  components: { BtnIcon },
+  components: { BtnIcon, BtnIconNoBack, SwTypeForm },
   setup() {},
 });
 </script>
@@ -42,7 +63,20 @@ export default defineComponent({
             color color-light
         .ctrls
             position relative
+            display flex
+            gap pd-md
     .right
         position relative
+        display flex
+        gap pd-md
+        align-items: center
+        .icon
+          color color-main
+          height icon-md
+          width icon-md
+          :hover
+            color color-light
+            cursor pointer
+
         
 </style>

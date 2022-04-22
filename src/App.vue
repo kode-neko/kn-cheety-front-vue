@@ -30,6 +30,9 @@ body
     &:focus
       outline none
 
+.trans-color
+  transition color 0.3s
+
 .trans-elevation
   transform translate(0, 0)
   transition transform 0.3s
@@ -43,9 +46,17 @@ body
 .disapear-leave-to
   opacity: 0
 
-
 .a
     background-color color-main
 .b
     background-color color-second
+
+.icon-xs
+  set-size(icon-xs)
+.icon-sm
+  set-size(icon-sm)
+.icon-md
+  set-size(icon-md)
+.icon-lg
+  set-size(icon-lg)
 </style>

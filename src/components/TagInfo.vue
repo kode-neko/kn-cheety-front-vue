@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="[$style.tag, type, 'trans-elevation']") {{ label }}
+div(:class="[$style.tag, type]") {{ label }}
   if isDeletable
     font-awesome-icon(
       :class="$style.icon",

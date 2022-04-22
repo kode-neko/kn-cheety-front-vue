@@ -34,6 +34,7 @@ div(:class="[$style.box]")
   p {{ msg }}
   InputReseteable(v-model="model.value01", placeholder="Patatas fritas verdes")
   p {{ model.value01 }}
+  InputTagList(v-model="model.tagList", placeholder="Insert tag name and press enter")
 </template>
 
 <script lang="ts">
@@ -45,10 +46,17 @@ import BtnSingleIcon from "../components/BtnSingleIcon.vue";
 import SwTypeForm from "../components/sw/SwTypeForm.vue";
 import SwVisualMode from "../components/sw/SwVisualMode.vue";
 import InputReseteable from "../components/InputReseteable.vue";
+import InputTagList from "../components/InputTagList.vue";
 import { defineComponent, ref } from "vue";
+
+interface Tag {
+  id: string;
+  label: string;
+}
 
 interface ModelHome {
   value01: string;
+  tagList: string[];
 }
 
 export default defineComponent({
@@ -61,13 +69,14 @@ export default defineComponent({
     SwTypeForm,
     SwVisualMode,
     InputReseteable,
+    InputTagList,
   },
   props: {
     msg: String,
     msg02: String,
   },
   setup(props, { emit }) {
-    const model = ref<ModelHome>({ value01: "test" });
+    const model = ref<ModelHome>({ value01: "test", tagList: [] });
     return {
       model,
     };

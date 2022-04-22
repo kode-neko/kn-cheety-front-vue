@@ -36,6 +36,14 @@ body
   &:hover
       transform translate(-2px, -2px)
 
+.disapear-enter-active,
+.disapear-leave-active
+  transition all 0.3s ease
+.disapear-enter-from,
+.disapear-leave-to
+  opacity: 0
+
+
 .a
     background-color color-main
 .b

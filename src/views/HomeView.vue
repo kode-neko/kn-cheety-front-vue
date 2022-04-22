@@ -34,7 +34,13 @@ div(:class="[$style.box]")
   p {{ msg }}
   InputReseteable(v-model="model.value01", placeholder="Patatas fritas verdes")
   p {{ model.value01 }}
-  InputTagList(v-model="model.tagList", placeholder="Insert tag name and press enter")
+  InputTagList(
+    v-model="model.tagList",
+    placeholder="Insert tag name and press enter"
+  )
+  FilterTags(
+    :tagList="[ { label: 'docker', id: 1 }, { label: 'container', id: 2 } ]"
+  )
 </template>
 
 <script lang="ts">
@@ -47,6 +53,7 @@ import SwTypeForm from "../components/sw/SwTypeForm.vue";
 import SwVisualMode from "../components/sw/SwVisualMode.vue";
 import InputReseteable from "../components/InputReseteable.vue";
 import InputTagList from "../components/InputTagList.vue";
+import FilterTags from "../components/FilterTags.vue";
 import { defineComponent, ref } from "vue";
 
 interface Tag {
@@ -70,6 +77,7 @@ export default defineComponent({
     SwVisualMode,
     InputReseteable,
     InputTagList,
+    FilterTags,
   },
   props: {
     msg: String,

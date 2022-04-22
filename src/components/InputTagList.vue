@@ -8,7 +8,7 @@ div(:class="$style.cont")
     :placeholder="placeholder"
   )
   div(:class="$style.tags")
-    TransitionGroup(name="tags")
+    TransitionGroup(name="disapear")
       TagInfo(
         v-for="tag in tagList",
         :key="tag.id",
@@ -22,11 +22,7 @@ div(:class="$style.cont")
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import TagInfo from "./TagInfo.vue";
-
-interface Tag {
-  id: string;
-  label: string;
-}
+import Tag from "../model/Tag";
 
 interface Props {
   initTagList: Array<unknown>;
@@ -60,7 +56,7 @@ export default defineComponent({
       if (!tagList.value.find((tag: Tag) => tag.label === value)) {
         const valTrim = value.trim().toLowerCase();
         tagList.value = [...props.modelValue, { id: valTrim, label: valTrim }];
-        emit("update:modelValue", tagList);
+        emit("update:modelValue", tagList.value);
         valTag.value = "";
       }
     };
@@ -74,18 +70,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.tags-enter-active,
-.tags-leave-active {
-  transition: all 0.3s ease;
-}
-
-.tags-enter-from,
-.tags-leave-to {
-  opacity: 0;
-}
-</style>
 
 <style lang="stylus" module>
 @import "../assets/base"

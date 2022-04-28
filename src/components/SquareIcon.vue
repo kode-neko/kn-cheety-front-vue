@@ -1,5 +1,5 @@
 <template lang="pug">
-div(:class="$style.square")
+div(:class="$style.square", @click="emit('click')")
   font-awesome-icon(:icon="icon")
 </template>
 
@@ -7,7 +7,11 @@ div(:class="$style.square")
 interface Props {
   icon: string;
 }
+interface Emit {
+  (e: "click"): void;
+}
 const props = defineProps<Props>();
+const emit = defineEmits<Emit>();
 </script>
 
 <style lang="stylus" module>
@@ -26,4 +30,7 @@ const props = defineProps<Props>();
     color color-light
     position relative
     top 9px
+  &:hover
+    cursor pointer
+    background-color color-dark-02
 </style>

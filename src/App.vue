@@ -46,6 +46,13 @@ body
 .disapear-leave-to
   opacity: 0
 
+.menu-enter-active,
+.menu-leave-active
+  transition: all 0.4s
+.menu-enter-from,
+.menu-leave-to
+  transform: translateY(-78px)
+
 .a
     background-color color-main
 .b

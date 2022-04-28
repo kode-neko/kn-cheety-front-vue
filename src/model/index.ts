@@ -1,3 +1,6 @@
-export * as Tag from "./Tag";
-export * as Size from "./Size";
-export * as Type from "./Type";
+import type Tag from "./Tag";
+import Size from "./Size";
+import Type from "./Type";
+import type Social from "./Social";
+
+export { Tag, Size, Type, Social };

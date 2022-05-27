@@ -24,6 +24,7 @@ const emit = defineEmits<Emit>();
   text-align center
   background-color color-dark
   border-radius br-sm
+  transition background-color 0.3s
   &>*
     height 22px
     width 22px

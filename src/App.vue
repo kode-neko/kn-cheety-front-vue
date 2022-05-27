@@ -53,6 +53,13 @@ body
 .menu-leave-to
   transform: translateY(-78px)
 
+.menu-bars-enter-active,
+.menu-bars-leave-active
+  transition: all 0.4s
+.menu-bars-enter-from,
+.menu-bars-leave-to
+  transform: translateY(-222px)
+
 .a
     background-color color-main
 .b

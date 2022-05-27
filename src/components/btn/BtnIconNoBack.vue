@@ -33,9 +33,7 @@ const emit = defineEmits<Emit>();
   padding 0
   &:hover
     cursor pointer
-    .a
-      color color-light
-    .b
+    .a,.b,.c
       color color-light
   .label
     margin-left pd-xs
@@ -46,6 +44,9 @@ const emit = defineEmits<Emit>();
   .b
     transition color 0.3s
     color color-second
+  .c
+    transition color 0.3s
+    color color-dark
   .sm
     font-size 24px
   .md

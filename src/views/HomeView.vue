@@ -6,14 +6,26 @@ div(:class="$style.collection")
 div(:class="[$style.box]")
   BtnIcon(type="a", size="sm", label="crear", :icon="['fas', 'circle-plus']")
   BtnIcon(type="a", size="md", label="crear", :icon="['fas', 'circle-plus']")
-  BtnIconNoBack(type="a", size="sm", label="crear", :icon="['far', 'envelope']")
-  BtnIconNoBack(type="b", size="md", label="crear", :icon="['far', 'envelope']")
+  BtnIconNoBack(
+    type="a",
+    size="sm",
+    label="crear",
+    :icon="['far', 'envelope']"
+  )
+  BtnIconNoBack(
+    type="b",
+    size="md",
+    label="crear",
+    :icon="['far', 'envelope']"
+  )
 
 MenuDesktop
+MenuMobile
 </template>
 
 <script lang="ts">
 import MenuDesktop from "../components/menu/MenuDesktop.vue";
+import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
 import { defineComponent, ref } from "vue";
@@ -33,6 +45,7 @@ export default defineComponent({
     BtnIcon,
     BtnIconNoBack,
     MenuDesktop,
+    MenuMobile,
   },
   props: {
     msg: String,

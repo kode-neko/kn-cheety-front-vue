@@ -18,7 +18,7 @@ div(:class="$style.outer")
           @click="isVisibleSearch = !isVisibleSearch"
         )
     div(:class="$style.right")
-      BtnIconNoBack(type="a", size="md", :icon="['far', 'envelope']")
+      BtnIconNoBack(type="a", size="md", :icon="['fas', 'magnifying-lass']")
       BtnIconNoBack(
         type="a",
         size="md",

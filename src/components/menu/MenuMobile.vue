@@ -8,14 +8,14 @@ div(:class="$style.outer")
         type="a",
         size="md",
         :icon="['fas', 'magnifying-glass']",
-        @click="isVisibleSearch = !isVisibleSearch"
+        @click="handleClickSearch"
       )
       BtnIconNoBack(type="a", size="md", :icon="['fas', 'circle-plus']")
       BtnIconNoBack(
         type="a",
         size="md",
         :icon="['fas', 'bars']",
-        @click="isVisibleMenu = !isVisibleMenu"
+        @click="handleClickMenu"
       )
   Transition(name="menu")
     div(v-if="isVisibleSearch", :class="$style.searchmenu")
@@ -31,9 +31,9 @@ div(:class="$style.outer")
           BtnIconNoBack(
             type="c",
             size="sm",
-            label="contactar"
+            label="contactar",
             :icon="['far', 'envelope']",
-            :class="$style.icon"
+            :class="$style.icon",
             @click="handleClickContact"
           )
       div(:class="$style.a")
@@ -68,9 +68,17 @@ export default defineComponent({
     const isVisibleSearch = ref<boolean>(false);
     const isVisibleMenu = ref<boolean>(false);
     const searchValue = ref<string>("");
+    const handleClickSearch = () => {
+      isVisibleMenu.value = false;
+      isVisibleSearch.value = !isVisibleSearch.value;
+    };
+    const handleClickMenu = () => {
+      isVisibleSearch.value = false;
+      isVisibleMenu.value = !isVisibleMenu.value;
+    };
     const handleClickContact = () => {
-      emit("contact")
-    }
+      emit("contact");
+    };
     const handleClickSocial = (social: Social) => {
       window.open(social.url);
     };
@@ -82,6 +90,8 @@ export default defineComponent({
       isVisibleSearch,
       isVisibleMenu,
       searchValue,
+      handleClickSearch,
+      handleClickMenu,
       handleClickContact,
       handleClickSocial,
       handleSearch,

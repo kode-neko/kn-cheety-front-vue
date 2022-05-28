@@ -1,6 +1,12 @@
 <template lang="pug">
 div(:class="$style.cont")
-  h2(:class="$style.title") {{ title }}
+  input(
+    v-if="editable",
+    :value="title",
+    :class="$style.title",
+    placeholder="Inserte el título"
+  )
+  h2(v-else, :class="$style.title") {{ title }}
   div
     slot
 </template>
@@ -11,6 +17,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   props: {
     title: String,
+    editable: Boolean,
   },
   setup(props, p) {
     return {};
@@ -29,4 +36,10 @@ export default defineComponent({
     color color-main
     font-weight bold
     margin-bottom pd-md
+    background none
+    border none
+    &::placeholder
+      font-style italic
+      color color-main
+      font-weight normal
 </style>

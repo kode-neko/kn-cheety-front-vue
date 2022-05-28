@@ -28,13 +28,23 @@ export default defineComponent({
     BtnIcon,
     TagInfo,
   },
+  emit: ["edit", "delete"],
   props: {
     title: String,
     content: String,
     tagList: Array,
   },
-  setup(props, p) {
-    return {};
+  setup(props, { emit }) {
+    const handleDelete = () => {
+      emit("delete");
+    };
+    const handleEdit = () => {
+      emit("edit");
+    };
+    return {
+      handleDelete,
+      handleEdit,
+    };
   },
 });
 </script>

@@ -55,7 +55,7 @@ export default defineComponent({
   display flex
   justify-content space-between
   margin-top pd-md
-  .right
+  .left,.right
       display flex
       gap pd-sm
 </style>

@@ -1,13 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from "@vue/runtime-core";
-
-interface Props {
-  modelValue: string;
-  placeholder: string;
-}
-interface Emit {
-  (e: "update:modelValue", value: string): void;
-}
+import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   props: {
@@ -28,10 +20,6 @@ export default defineComponent({
     };
   },
 });
-/*
-const props = defineProps<Props>();
-const emit = defineEmits<Emit>();
-*/
 </script>
 
 <template lang="pug">

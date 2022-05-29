@@ -22,14 +22,20 @@ div(:class="[$style.box]")
 MenuDesktop
 MenuMobile
 
-BoxBase(title="Un titulo cualquiera")
-  div Baltasar
+div(:class="$style.fufu")
+  BoxBase(title="Un titulo cualquiera", :editable="false")
+    div Baltasar
 
-BoxArticle(
-  title="Título",
-  content="Esto es una prueba",
-  :tagList="[{ id: 'docker', label: 'Docker' }]"
-)
+  BoxArticle(
+    title="Título",
+    content="Esto es una prueba",
+    :editable="true",
+    :tagList="[{ id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }]"
+  )
+
+  BoxForm(
+    title="Una prueba"
+  )
 </template>
 
 <script lang="ts">
@@ -37,7 +43,7 @@ import MenuDesktop from "../components/menu/MenuDesktop.vue";
 import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
-import { BoxBase, BoxArticle } from "../boxes";
+import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
 
 interface Tag {
@@ -58,6 +64,7 @@ export default defineComponent({
     MenuMobile,
     BoxBase,
     BoxArticle,
+    BoxForm
   },
   props: {
     msg: String,
@@ -90,4 +97,10 @@ export default defineComponent({
   flex-wrap wrap
   background-color color-dark
   align-items center
+
+.fufu
+  padding 40px
+  display flex
+  flex-direction column
+  gap pd-md
 </style>

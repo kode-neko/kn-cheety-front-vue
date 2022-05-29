@@ -26,7 +26,8 @@ body
   button
     border none
     font-size 18px
-  input
+  input,textarea
+    font-family 'Roboto', sans-serif
     &:focus
       outline none
 

@@ -5,34 +5,31 @@ div(:class="$style.cont")
       SwTypeForm(
         labelLeft="List",
         labelRight="Text",
-        :valLeft="list",
-        :valRight="text"
+        valLeft="list",
+        valRight="text",
+        @toggle="(val) => swFormType(val)"
       )
-      InputAddList
-      textarea(:class="$style.txtarea")
+      Transition(name="disapear")
+        InputAddList(v-if="isVisibleList")
+        textarea(v-else, :class="$style.txtarea")
       InputTagList(:modelValue="[]", placeholder="Introduzca las etiquetas")
   div(:class="$style.btns")
     BtnIcon(
       label="Delete",
       :icon="['fas', 'circle-xmark']",
       size="md",
-      type="b",
+      type="b"
     )
-    BtnIcon(
-      label="Save",
-      :icon="['fas', 'circle-check']",
-      size="md",
-      type="b",
-    )
+    BtnIcon(label="Save", :icon="['fas', 'circle-check']", size="md", type="b")
 </template>
 
 <script lang="ts">
 import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "../components/sw/SwTypeForm.vue";
 import InputTagList from "../components/InputTagList.vue";
-import InputAddList from '../components/InputAddList.vue';
+import InputAddList from "../components/InputAddList.vue";
 import { BtnIcon } from "../components/btn";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   components: {
@@ -47,6 +44,10 @@ export default defineComponent({
     title: String,
   },
   setup(props, { emit }) {
+    const isVisibleList = ref<boolean>(true);
+    const swFormType = (val) => {
+      isVisibleList.value = val === "list";
+    };
     const handleDelete = () => {
       emit("delete");
     };
@@ -54,6 +55,8 @@ export default defineComponent({
       emit("save");
     };
     return {
+      isVisibleList,
+      swFormType,
       handleDelete,
       handleSave,
     };
@@ -77,6 +80,7 @@ export default defineComponent({
       background-color color-light
       padding pd-md
       width 100%
+      min-height 130px
       &:focus
           outline 4px solid color-main
       &::placeholder

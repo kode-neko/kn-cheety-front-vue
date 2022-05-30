@@ -10,10 +10,7 @@ div(:class="$style.cont")
         @toggle="(val) => swFormType(val)"
       )
       Transition(name="disapear")
-        InputAddList(
-          v-if="isVisibleList",
-          :modelValue="articleState.bodyList"
-        )
+        InputAddList(v-if="isVisibleList", :modelValue="articleState.bodyList")
         textarea(v-else, :class="$style.txtarea", v-model="articleState.body")
       InputTagList(:modelValue="[]", placeholder="Introduzca las etiquetas")
   div(:class="$style.btns")
@@ -31,7 +28,7 @@ import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "../components/sw/SwTypeForm.vue";
 import InputTagList from "../components/InputTagList.vue";
 import InputAddList from "../components/InputAddList.vue";
-import { Article } from "../model";
+import { Article, ArticleForm } from "../model";
 import { BtnIcon } from "../components/btn";
 import { defineComponent, ref, PropType } from "vue";
 
@@ -49,7 +46,8 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const isVisibleList = ref<boolean>(true);
-    const articleState = ref<Article>(props.article);
+    const af = new Article();
+    const articleState = ref<ArticleForm>(props.article);
     const swFormType = (val) => {
       isVisibleList.value = val === "list";
     };

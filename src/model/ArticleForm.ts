@@ -31,13 +31,27 @@ class ArticleForm {
   private _body?: string;
   private _tagList: Array<Tag>;
 
-  constructor(a?: IArticleForm) {
-    this._id = a?.id;
-    this._title = a?.title ?? "";
-    this._type = a?.type ?? ArticleFormType.List;
-    this._bodyList = a?.bodyList ?? [];
-    this._body = a?.body ?? "";
-    this._tagList = a?.tagList ?? [];
+  constructor(iaf?: IArticleForm, a?: Article) {
+    if (iaf) {
+      this._id = iaf.id;
+      this._title = iaf.title ?? "";
+      this._type = iaf.type ?? ArticleFormType.List;
+      this._bodyList = iaf.bodyList ?? [];
+      this._body = iaf.body ?? "";
+      this._tagList = iaf.tagList ?? [];
+    } else if (a) {
+      this._id = a.id;
+      this._title = a.title ?? "";
+      this._type =
+        a.body instanceof String ? ArticleFormType.Text : ArticleFormType.List;
+      if (a.body instanceof String) this._body = a.body as string;
+      else this._bodyList = a.body as Array<string>;
+      this._tagList = a.tagList ?? [];
+    } else {
+      this._title = "";
+      this._type = ArticleFormType.List;
+      this._tagList = [];
+    }
   }
 
   toArticle(): Article {

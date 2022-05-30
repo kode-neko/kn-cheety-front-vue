@@ -14,11 +14,22 @@ class Article {
   private _body: string | Array<string>;
   private _tagList: Array<Tag>;
 
-  constructor(af?: IArticle) {
-    this._id = af?.id;
-    this._title = af?.title ?? "";
-    this._body = af?.body ?? "";
-    this._tagList = af?.tagList ?? [];
+  constructor(ia?: IArticle, af?: ArticleForm) {
+    if (ia) {
+      this._id = ia.id;
+      this._title = ia.title ?? "";
+      this._body = ia.body ?? "";
+      this._tagList = ia.tagList ?? [];
+    } else if (af) {
+      this._id = af.id;
+      this._title = af.title ?? "";
+      this._body = af.type === ArticleFormType.List ? af.bodyList : af.body;
+      this._tagList = af.tagList ?? [];
+    } else {
+      this._title = "";
+      this._body = [];
+      this._tagList = [];
+    }
   }
 
   toArticleForm(): ArticleForm {

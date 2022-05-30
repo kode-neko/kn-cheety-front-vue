@@ -6,10 +6,11 @@ export default defineComponent({
     modelValue: String,
     placeholder: String,
   },
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue", "delete"],
   setup(props, { emit }) {
     const deleteContent = () => {
       emit("update:modelValue", "");
+      emit("delete");
     };
     const updateContent = (e: Event) => {
       emit("update:modelValue", (e.target as HTMLInputElement).value);

@@ -1,11 +1,19 @@
 <template lang="pug">
 div(:class="$style.cont")
   div(:class="$style.inputs")
-    InputReseteable(modelValue="")
-    InputReseteable(modelValue="")
-    InputReseteable(modelValue="")
+    TransitionGroup(name="disapear")
+      InputReseteable(
+        v-for="(line, index) in lineList",
+        :modelValue="line",
+        @delete="() => handleDelete(index)"
+      )
   div(:class="$style.action")
-    BtnIcon(label="Add line", type="a", :icon="['fas', 'circle-plus']")
+    BtnIcon(
+      label="Add line",
+      type="a",
+      :icon="['fas', 'circle-plus']",
+      @click="addLine"
+    )
 </template>
 
 <script lang="ts">
@@ -14,11 +22,26 @@ import InputReseteable from "./InputReseteable.vue";
 import { BtnIcon } from "../components/btn";
 
 export default defineComponent({
-  props: {},
+  props: {
+    modelValue: Array,
+  },
   components: { InputReseteable, BtnIcon },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    return {};
+    const lineList = ref<Array<unknown>>(props.modelValue);
+    const handleDelete = (indexDeleted) => {
+      lineList.value = lineList.value.filter(
+        (ele, index) => index !== indexDeleted
+      );
+    };
+    const addLine = () => {
+      lineList.value = [...lineList.value, ""];
+    };
+    return {
+      lineList,
+      handleDelete,
+      addLine,
+    };
   },
 });
 </script>

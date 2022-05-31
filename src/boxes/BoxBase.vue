@@ -2,9 +2,10 @@
 div(:class="$style.cont")
   input(
     v-if="editable",
-    :value="title",
     :class="$style.title",
-    placeholder="Inserte el título"
+    placeholder="Inserte el título",
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
   )
   h2(v-else, :class="$style.title") {{ title }}
   div
@@ -16,9 +17,10 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    title: String,
     editable: Boolean,
+    modelValue: String,
   },
+  emits: ["update:modelValue"],
   setup(props, p) {
     return {};
   },

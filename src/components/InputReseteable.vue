@@ -13,6 +13,7 @@ export default defineComponent({
       emit("delete");
     };
     const updateContent = (e: Event) => {
+      console.log("inputreseteable");
       emit("update:modelValue", (e.target as HTMLInputElement).value);
     };
     return {
@@ -29,7 +30,7 @@ div(:class="$style.cont")
     :value="modelValue",
     :class="$style.input",
     :placeholder="placeholder",
-    @input="updateContent"
+    @input="(e) => updateContent(e)"
   )
   font-awesome-icon(
     :class="$style.icon",

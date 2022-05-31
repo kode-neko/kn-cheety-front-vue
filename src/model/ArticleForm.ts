@@ -1,17 +1,5 @@
-/*
-interface IArticleForm {
-  id?: string;
-  title: string;
-  bodyList?: Array<string> | string;
-  body?: string;
-  tagList: Array<Tag>;
-}
-
-export default ArticleForm;
-*/
-
 import type Tag from "./Tag";
-import type Article from "./Article";
+import type { IArticle } from "./Article";
 import ArticleFormType from "./ArticleFormType";
 
 interface IArticleForm {
@@ -31,7 +19,7 @@ class ArticleForm {
   private _body?: string;
   private _tagList: Array<Tag>;
 
-  constructor(iaf?: IArticleForm, a?: Article) {
+  constructor(iaf?: IArticleForm, a?: IArticle) {
     if (iaf) {
       this._id = iaf.id;
       this._title = iaf.title ?? "";
@@ -54,13 +42,24 @@ class ArticleForm {
     }
   }
 
-  toArticle(): Article {
+  toIArticle(): IArticle {
     return {
       id: this._id,
       title: this._title,
       body: this.body || this._bodyList,
       tagList: this._tagList,
-    } as Article;
+    } as IArticle;
+  }
+
+  toIArticleForm(): IArticleForm {
+    return {
+      id: this._id,
+      title: this._title,
+      type: this._type,
+      bodyList: this._bodyList,
+      body: this._body,
+      tagList: this._tagList,
+    } as IArticleForm;
   }
 
   set id(val: string) {
@@ -106,4 +105,5 @@ class ArticleForm {
   }
 }
 
-export default ArticleForm;
+export type { IArticleForm };
+export { ArticleForm };

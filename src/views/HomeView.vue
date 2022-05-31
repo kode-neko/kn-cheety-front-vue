@@ -30,11 +30,10 @@ div(:class="$style.fufu")
     title="Título",
     content="Esto es una prueba",
     :editable="true",
-    :tagList="[ { id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }, ]",
-    @save="handleSaveForm"
+    :tagList="[ { id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }, ]"
   )
 
-  BoxForm(:article="a")
+  BoxForm(:article="a", @save="handleSaveForm")
 </template>
 
 <script lang="ts">
@@ -72,8 +71,13 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const model = ref<ModelHome>({ value01: "test", tagList: [] });
-    const a = new Article();
+    const a = new Article({
+      title: "patata",
+      body: ["p"],
+      tagList: [{ id: "docker", label: "docker" }],
+    });
     const handleSaveForm = (article) => {
+      console.log("press save");
       console.log(article);
     };
     return {

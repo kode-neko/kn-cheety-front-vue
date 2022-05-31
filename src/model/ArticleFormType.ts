@@ -1,6 +1,6 @@
 enum ArticleFormType {
-  List,
-  Text,
+  List = "list",
+  Text = "text",
 }
 
 export default ArticleFormType;

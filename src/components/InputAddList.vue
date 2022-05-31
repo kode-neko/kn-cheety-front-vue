@@ -34,6 +34,7 @@ export default defineComponent({
       lineList.value = [""];
     }
     const handleModifyList = (newVal, indexMod) => {
+      console.log("handleModifyList");
       lineList.value = lineList.value.map((ele, index) =>
         index === indexMod ? newVal : ele
       );

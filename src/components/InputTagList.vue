@@ -55,7 +55,7 @@ export default defineComponent({
     const insertTag = (value: string) => {
       if (!tagList.value.find((tag: Tag) => tag.label === value)) {
         const valTrim = value.trim().toLowerCase();
-        tagList.value = [...props.modelValue, { id: valTrim, label: valTrim }];
+        tagList.value = [...tagList.value, { id: valTrim, label: valTrim }];
         emit("update:modelValue", tagList.value);
         valTag.value = "";
       }

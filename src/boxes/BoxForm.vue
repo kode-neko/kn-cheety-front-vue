@@ -1,6 +1,10 @@
 <template lang="pug">
 div(:class="$style.cont")
-  BoxBase(:title="afState.title", :editable="true")
+  BoxBase(
+    :editable="true",
+    :modelValue="afState.title",
+    @update:modelValue="(newVal) => (afState.title = newVal)"
+  )
     div(:class="$style.form")
       SwTypeForm(
         labelLeft="List",
@@ -10,10 +14,15 @@ div(:class="$style.cont")
         @toggle="(val) => swFormType(val)"
       )
       Transition(name="disapear")
-        InputAddList(v-if="isVisibleList", :modelValue="afState.bodyList")
+        InputAddList(
+          v-if="isVisibleList",
+          :modelValue="afState.bodyList",
+          @update:modelValue="(newVal) => (afState.bodyList = newVal)"
+        )
         textarea(v-else, :class="$style.txtarea", v-model="afState.body")
       InputTagList(
         :modelValue="afState.tagList",
+        @update:modelValue="(newVal) => (afState.tagList = newVal)",
         placeholder="Introduzca las etiquetas"
       )
   div(:class="$style.btns")
@@ -23,7 +32,13 @@ div(:class="$style.cont")
       size="md",
       type="b"
     )
-    BtnIcon(label="Save", :icon="['fas', 'circle-check']", size="md", type="b", @click="handleSave")
+    BtnIcon(
+      label="Save",
+      :icon="['fas', 'circle-check']",
+      size="md",
+      type="b",
+      @click="handleSave"
+    )
 </template>
 
 <script lang="ts">
@@ -31,7 +46,7 @@ import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "../components/sw/SwTypeForm.vue";
 import InputTagList from "../components/InputTagList.vue";
 import InputAddList from "../components/InputAddList.vue";
-import { Article, ArticleForm } from "../model";
+import { Article, ArticleForm, IArticleForm } from "../model";
 import { BtnIcon } from "../components/btn";
 import { defineComponent, ref, PropType } from "vue";
 
@@ -50,15 +65,17 @@ export default defineComponent({
   setup(props, { emit }) {
     const isVisibleList = ref<boolean>(true);
     const af = new ArticleForm(undefined, props.article);
-    const afState = ref<ArticleForm>(af);
+    const aux = af.toIArticleForm();
+    const afState = ref<IArticleForm>(aux);
     const swFormType = (val) => {
       isVisibleList.value = val === "list";
+      afState.value.type = val;
     };
     const handleDelete = () => {
       emit("delete");
     };
     const handleSave = () => {
-      const articleSaved = new Article(undefined, afState.value as ArticleForm);
+      const articleSaved = new Article(undefined, afState.value);
       emit("save", articleSaved);
     };
     return {

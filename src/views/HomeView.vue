@@ -34,6 +34,8 @@ div(:class="$style.fufu")
   )
 
   BoxForm(:article="a", @save="handleSaveForm")
+
+  LoginMain
 </template>
 
 <script lang="ts">
@@ -41,6 +43,7 @@ import MenuDesktop from "../components/menu/MenuDesktop.vue";
 import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
+import LoginMain from "../components/LoginMain.vue";
 import { Article } from "../model";
 import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
@@ -64,6 +67,7 @@ export default defineComponent({
     BoxBase,
     BoxArticle,
     BoxForm,
+    LoginMain,
   },
   props: {
     msg: String,

@@ -28,9 +28,21 @@ body
     font-size 18px
   input,textarea
     font-family 'Roboto', sans-serif
+    font-size 18px
+    border none
+    border-radius br-sm
+    box-sizing border-box
+    background-color color-light
+    padding pd-md
+    height 40px
+    width 100%
     &:focus
-      outline none
-
+        outline 4px solid color-main
+    &::placeholder
+        color color-main
+        font-style italic
+  textarea
+    min-height 130px
 .trans-color
   transition color 0.3s
 

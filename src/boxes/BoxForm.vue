@@ -1,6 +1,6 @@
 <template lang="pug">
 div(:class="$style.cont")
-  BoxBase(:title="articleState.title", :editable="true")
+  BoxBase(:title="afState.title", :editable="true")
     div(:class="$style.form")
       SwTypeForm(
         labelLeft="List",
@@ -10,9 +10,12 @@ div(:class="$style.cont")
         @toggle="(val) => swFormType(val)"
       )
       Transition(name="disapear")
-        InputAddList(v-if="isVisibleList", :modelValue="articleState.bodyList")
-        textarea(v-else, :class="$style.txtarea", v-model="articleState.body")
-      InputTagList(:modelValue="[]", placeholder="Introduzca las etiquetas")
+        InputAddList(v-if="isVisibleList", :modelValue="afState.bodyList")
+        textarea(v-else, :class="$style.txtarea", v-model="afState.body")
+      InputTagList(
+        :modelValue="afState.tagList",
+        placeholder="Introduzca las etiquetas"
+      )
   div(:class="$style.btns")
     BtnIcon(
       label="Delete",
@@ -20,7 +23,7 @@ div(:class="$style.cont")
       size="md",
       type="b"
     )
-    BtnIcon(label="Save", :icon="['fas', 'circle-check']", size="md", type="b")
+    BtnIcon(label="Save", :icon="['fas', 'circle-check']", size="md", type="b", @click="handleSave")
 </template>
 
 <script lang="ts">
@@ -46,8 +49,8 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const isVisibleList = ref<boolean>(true);
-    const af = new Article();
-    const articleState = ref<ArticleForm>(props.article);
+    const af = new ArticleForm(undefined, props.article);
+    const afState = ref<ArticleForm>(af);
     const swFormType = (val) => {
       isVisibleList.value = val === "list";
     };
@@ -55,11 +58,12 @@ export default defineComponent({
       emit("delete");
     };
     const handleSave = () => {
-      emit("save");
+      const articleSaved = new Article(undefined, afState.value as ArticleForm);
+      emit("save", articleSaved);
     };
     return {
       isVisibleList,
-      articleState,
+      afState,
       swFormType,
       handleDelete,
       handleSave,

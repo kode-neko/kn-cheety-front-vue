@@ -30,12 +30,11 @@ div(:class="$style.fufu")
     title="Título",
     content="Esto es una prueba",
     :editable="true",
-    :tagList="[{ id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }]"
+    :tagList="[ { id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }, ]",
+    @save="handleSaveForm"
   )
 
-  BoxForm(
-    title="Una prueba"
-  )
+  BoxForm(:article="a")
 </template>
 
 <script lang="ts">
@@ -43,6 +42,7 @@ import MenuDesktop from "../components/menu/MenuDesktop.vue";
 import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
+import { Article } from "../model";
 import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
 
@@ -64,7 +64,7 @@ export default defineComponent({
     MenuMobile,
     BoxBase,
     BoxArticle,
-    BoxForm
+    BoxForm,
   },
   props: {
     msg: String,
@@ -72,8 +72,14 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const model = ref<ModelHome>({ value01: "test", tagList: [] });
+    const a = new Article();
+    const handleSaveForm = (article) => {
+      console.log(article);
+    };
     return {
       model,
+      a,
+      handleSaveForm,
     };
   },
 });

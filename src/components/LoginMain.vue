@@ -1,23 +1,38 @@
 <template lang="pug">
 div(:class="$style.cont")
   h1(:class="$style.title") Cheety
-  input(:class="$style.user")
-  input(:class="$style.pass", type="password")
-  BtnWide(label="Login", size="sm", type="a")
-  BtnWide(:class="$style.btnGuest", label="Login", size="md", type="b")
+  input(:class="$style.user", v-model="userInserted.username")
+  input(:class="$style.pass", type="password", v-model="userInserted.pass")
+  BtnWide(label="Login", size="sm", type="a", @click="handleLogin")
+  BtnWide(:class="$style.btnGuest", label="Modo Invitado", size="md", type="b", @click="handleGuest")
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import { BtnWide } from "../components/btn";
+import type { User } from "../model";
 
 export default defineComponent({
-  props: {},
+  props: {
+    user: Object as PropType<User>,
+  },
+  emit: ["login", "guest"],
   components: {
     BtnWide,
   },
-  setup(props) {
-    return {};
+  setup(props, { emit }) {
+    const userInserted = ref<User>(props.user);
+    const handleLogin = () => {
+      emit("login", userInserted);
+    };
+    const handleGuest = () => {
+      emit("guest");
+    };
+    return {
+      handleLogin,
+      handleGuest,
+      userInserted,
+    };
   },
 });
 </script>

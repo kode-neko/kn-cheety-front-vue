@@ -24,7 +24,7 @@ MenuMobile
 
 div(:class="$style.fufu")
   BoxBase(title="Un titulo cualquiera", :editable="false")
-    div Baltasar
+    div Melchor
 
   BoxArticle(
     title="Título",
@@ -35,7 +35,8 @@ div(:class="$style.fufu")
 
   BoxForm(:article="a", @save="handleSaveForm")
 
-  LoginMain
+  LoginMain(:user="{username: 'patata', pass:'qwerty'}", @login="handleLogin")
+
 </template>
 
 <script lang="ts">
@@ -81,13 +82,17 @@ export default defineComponent({
       tagList: [{ id: "docker", label: "docker" }],
     });
     const handleSaveForm = (article) => {
-      console.log("press save");
+      console.log("press savee");
       console.log(article);
+    };
+    const handleLogin = (user) => {
+      console.log("login: ", user);
     };
     return {
       model,
       a,
       handleSaveForm,
+      handleLogin,
     };
   },
 });

@@ -39,6 +39,7 @@ div(:class="$style.cont")
       type="b",
       @click="handleSave"
     )
+    patata
 </template>
 
 <script lang="ts">

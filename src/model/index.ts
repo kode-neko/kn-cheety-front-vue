@@ -7,6 +7,7 @@ import type { IArticle } from "./Article";
 import { ArticleForm } from "./ArticleForm";
 import type { IArticleForm } from "./ArticleForm";
 import ArticleFormType from "./ArticleFormType";
+import type User from "./User";
 
 export {
   Tag,
@@ -18,4 +19,5 @@ export {
   ArticleForm,
   IArticleForm,
   ArticleFormType,
+  User,
 };

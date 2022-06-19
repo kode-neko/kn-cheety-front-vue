@@ -30,12 +30,14 @@ div(:class="$style.fufu")
     title="Título",
     content="Esto es una prueba",
     :editable="true",
-    :tagList="[ { id: 'docker', label: 'docker' }, { id: 'image', label: 'image' }, ]"
+    :tagList="[{ id: 'docker', label: 'docker' }, { id: 'image', label: 'image' },]"
   )
 
   BoxForm(:article="a", @save="handleSaveForm")
 
-  LoginMain(:user="{username: 'patata', pass:'qwerty'}", @login="handleLogin")
+  LoginMain(:user="{ username: 'patata', pass: 'qwerty' }", @login="handleLogin")
+
+
 
 </template>
 
@@ -45,6 +47,7 @@ import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
 import LoginMain from "../components/LoginMain.vue";
+import ModalBase from "../modal/ModalBase.vue";
 import { Article } from "../model";
 import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
@@ -69,6 +72,7 @@ export default defineComponent({
     BoxArticle,
     BoxForm,
     LoginMain,
+    ModalBase,
   },
   props: {
     msg: String,

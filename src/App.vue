@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import ModalBase from "./modal/Modalbase.vue";
 </script>
 
 <template>
@@ -8,7 +7,6 @@ import ModalBase from "./modal/Modalbase.vue";
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
   </nav>
-  <ModalBase />
   <RouterView />
 </template>
 

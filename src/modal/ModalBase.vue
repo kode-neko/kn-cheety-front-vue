@@ -1,17 +1,20 @@
 <template lang="pug">
-div(:class="$style.cont")
-  div(:class="$style.head")
-    font-awesome-icon(
-      :class="$style.close"
-      :icon="['fas', 'circle-xmark']"
-      @click="handleClose"
-    )
-  div(:class="$style.body")
-    slot
-  div(:class="$style.bottom")
-    button(:class="[$style.btn, $style.izq, 'a']", @click="() => handleClose()") Cancel
-    button(:class="[$style.btn, $style.der, 'b']", @click="() => handleClose()") Accept
-div(:class="$style.back")
+Transition(name="disapear")
+  div(v-if="isVisible", :class="$style.cont")
+    div(:class="$style.head")
+      font-awesome-icon(
+        :class="$style.close"
+        :icon="['fas', 'circle-xmark']"
+        @click="handleClose"
+      )
+    div(:class="$style.body")
+      slot
+    div(:class="$style.bottom")
+      button(:class="[$style.btn, $style.izq, 'a']", @click="handleClose") Cancel
+      button(:class="[$style.btn, $style.der, 'b']", @click="handleClose") Accept
+    
+Transition(name="disapear")
+  div(v-if="isVisible", :class="$style.back")
 </template>
 
 <script lang="ts">
@@ -19,7 +22,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   emit: ["close", "cancel", "accept"],
-  props: {},
+  props: { isVisible: Boolean },
   setup(props, { emit }) {
     const handleClose = () => {
       emit("close");

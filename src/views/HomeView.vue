@@ -37,6 +37,10 @@ div(:class="$style.fufu")
 
   LoginMain(:user="{ username: 'patata', pass: 'qwerty' }", @login="handleLogin")
 
+ModalBase(:isVisible="isVisibleModal", @close="() => isVisibleModal = !isVisibleModal")
+
+Button(@click="isVisibleModal = !isVisibleModal") Mostrar Modal
+
 
 
 </template>
@@ -80,6 +84,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const model = ref<ModelHome>({ value01: "test", tagList: [] });
+    const isVisibleModal = ref<boolean>(false);
     const a = new Article({
       title: "patata",
       body: ["p"],
@@ -94,6 +99,7 @@ export default defineComponent({
     };
     return {
       model,
+      isVisibleModal,
       a,
       handleSaveForm,
       handleLogin,

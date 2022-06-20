@@ -37,7 +37,7 @@ div(:class="$style.fufu")
 
   LoginMain(:user="{ username: 'patata', pass: 'qwerty' }", @login="handleLogin")
 
-ModalBase(:isVisible="isVisibleModal", @close="() => isVisibleModal = !isVisibleModal")
+ModalBase(:isVisible="isVisibleModal", @close="() => isVisibleModal = !isVisibleModal", labelIzq="Cancel", labelDer="Send")
 
 Button(@click="isVisibleModal = !isVisibleModal") Mostrar Modal
 

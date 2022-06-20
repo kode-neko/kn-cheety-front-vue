@@ -10,9 +10,9 @@ Transition(name="disapear")
     div(:class="$style.body")
       slot
     div(:class="$style.bottom")
-      button(:class="[$style.btn, $style.izq, 'a']", @click="handleClose") Cancel
-      button(:class="[$style.btn, $style.der, 'b']", @click="handleClose") Accept
-    
+      button(:class="[$style.btn, $style.izq, 'a']", @click="handleClose") {{labelIzq}}
+      button(:class="[$style.btn, $style.der, 'b']", @click="handleClose") {{labelDer}}
+
 Transition(name="disapear")
   div(v-if="isVisible", :class="$style.back")
 </template>
@@ -22,7 +22,19 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   emit: ["close", "cancel", "accept"],
-  props: { isVisible: Boolean },
+  props: {
+    isVisible: Boolean,
+    labelIzq: {
+      type: String,
+      required: true,
+      default: "Cancel",
+    },
+    labelDer: {
+      type: String,
+      required: true,
+      default: "Accept",
+    },
+  },
   setup(props, { emit }) {
     const handleClose = () => {
       emit("close");

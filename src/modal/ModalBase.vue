@@ -7,11 +7,11 @@ Transition(name="disapear")
         :icon="['fas', 'circle-xmark']"
         @click="handleClose"
       )
-    div(:class="$style.body")
+    div(:class="$style.body") 
       slot
     div(:class="$style.bottom")
-      button(:class="[$style.btn, $style.izq, 'a']", @click="handleClose") {{labelIzq}}
-      button(:class="[$style.btn, $style.der, 'b']", @click="handleClose") {{labelDer}}
+      button(:class="[$style.btn, $style.izq, 'a']", @click="handleLeft") {{labelIzq}}
+      button(:class="[$style.btn, $style.der, 'b']", @click="handleRight") {{labelDer}}
 
 Transition(name="disapear")
   div(v-if="isVisible", :class="$style.back")
@@ -21,7 +21,7 @@ Transition(name="disapear")
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  emit: ["close", "cancel", "accept"],
+  emit: ["close", "left", "right"],
   props: {
     isVisible: Boolean,
     labelIzq: {
@@ -39,8 +39,16 @@ export default defineComponent({
     const handleClose = () => {
       emit("close");
     };
+    const handleLeft = () => {
+      emit("left");
+    };
+    const handleRight = () => {
+      emit("right");
+    };
     return {
       handleClose,
+      handleLeft,
+      handleRight,
     };
   },
 });
@@ -77,7 +85,6 @@ export default defineComponent({
   .body
     box-sizing border-box
     height 100%
-    padding pd-md
   .bottom
     box-sizing border-box
     height 46px

@@ -1,48 +1,15 @@
 <template lang="pug">
-div(:class="$style.collection")
-  BtnIcon(type="b", size="sm", label="crear", :icon="['fas', 'circle-plus']")
-  BtnIcon(type="b", size="md", label="crear", :icon="['fas', 'circle-plus']")
-
-div(:class="[$style.box]")
-  BtnIcon(type="a", size="sm", label="crear", :icon="['fas', 'circle-plus']")
-  BtnIcon(type="a", size="md", label="crear", :icon="['fas', 'circle-plus']")
-  BtnIconNoBack(
-    type="a",
-    size="sm",
-    label="crear",
-    :icon="['far', 'envelope']"
-  )
-  BtnIconNoBack(
-    type="b",
-    size="md",
-    label="crear",
-    :icon="['far', 'envelope']"
-  )
-
-MenuDesktop
-MenuMobile
-
-div(:class="$style.fufu")
-  BoxBase(title="Un titulo cualquiera", :editable="false")
-    div Melchor
-
-  BoxArticle(
-    title="Título",
-    content="Esto es una prueba",
-    :editable="true",
-    :tagList="[{ id: 'docker', label: 'docker' }, { id: 'image', label: 'image' },]"
-  )
-
-  BoxForm(:article="a", @save="handleSaveForm")
-
-  LoginMain(:user="{ username: 'patata', pass: 'qwerty' }", @login="handleLogin")
-
-ModalBase(:isVisible="isVisibleModal", @close="() => isVisibleModal = !isVisibleModal", labelIzq="Cancel", labelDer="Send")
-
+ModalInfo(
+  :isVisible="isVisibleModal",
+  labelIzq="Cancel", 
+  labelDer="Accept"
+  @close="handlerClose",
+  @left="handlerClose",
+  @right="handlerClose",
+  msg="Do you want to delete the resource?",
+  :icon="['far', 'trash-can']"
+)
 Button(@click="isVisibleModal = !isVisibleModal") Mostrar Modal
-
-
-
 </template>
 
 <script lang="ts">
@@ -51,7 +18,7 @@ import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
 import LoginMain from "../components/LoginMain.vue";
-import ModalBase from "../modal/ModalBase.vue";
+import ModalInfo from "../modal/ModalInfo.vue";
 import { Article } from "../model";
 import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
@@ -76,33 +43,20 @@ export default defineComponent({
     BoxArticle,
     BoxForm,
     LoginMain,
-    ModalBase,
+    ModalInfo,
   },
   props: {
     msg: String,
     msg02: String,
   },
   setup(props, { emit }) {
-    const model = ref<ModelHome>({ value01: "test", tagList: [] });
     const isVisibleModal = ref<boolean>(false);
-    const a = new Article({
-      title: "patata",
-      body: ["p"],
-      tagList: [{ id: "docker", label: "docker" }],
-    });
-    const handleSaveForm = (article) => {
-      console.log("press savee");
-      console.log(article);
-    };
-    const handleLogin = (user) => {
-      console.log("login: ", user);
+    const handlerClose = () => {
+      isVisibleModal.value = false;
     };
     return {
-      model,
       isVisibleModal,
-      a,
-      handleSaveForm,
-      handleLogin,
+      handlerClose,
     };
   },
 });

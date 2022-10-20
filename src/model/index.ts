@@ -8,6 +8,7 @@ import { ArticleForm } from "./ArticleForm";
 import type { IArticleForm } from "./ArticleForm";
 import ArticleFormType from "./ArticleFormType";
 import type User from "./User";
+import type EmailForm from "./EmailForm";
 
 export {
   Tag,
@@ -20,4 +21,5 @@ export {
   IArticleForm,
   ArticleFormType,
   User,
+  EmailForm,
 };

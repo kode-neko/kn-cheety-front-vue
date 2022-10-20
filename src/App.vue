@@ -22,8 +22,8 @@ body
   color color-light
   font-size 18px
   a
-      text-decoration none
-      color color-light
+    text-decoration none
+    color color-light
   button
     border none
     font-size 18px

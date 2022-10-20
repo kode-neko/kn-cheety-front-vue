@@ -1,13 +1,11 @@
 <template lang="pug">
-ModalInfo(
+ModalMail(
   :isVisible="isVisibleModal",
   labelIzq="Cancel", 
   labelDer="Accept"
   @close="handlerClose",
   @left="handlerClose",
-  @right="handlerClose",
-  msg="Do you want to delete the resource?",
-  :icon="['far', 'trash-can']"
+  @right="handlerMail",
 )
 Button(@click="isVisibleModal = !isVisibleModal") Mostrar Modal
 </template>
@@ -18,20 +16,10 @@ import MenuMobile from "../components/menu/MenuMobile.vue";
 import BtnIcon from "../components/btn/BtnIcon.vue";
 import BtnIconNoBack from "../components/btn/BtnIconNoBack.vue";
 import LoginMain from "../components/LoginMain.vue";
-import ModalInfo from "../modal/ModalInfo.vue";
-import { Article } from "../model";
+import ModalMail from "../modal/ModalMail.vue";
 import { BoxBase, BoxArticle, BoxForm } from "../boxes";
 import { defineComponent, ref } from "vue";
-
-interface Tag {
-  id: string;
-  label: string;
-}
-
-interface ModelHome {
-  value01: string;
-  tagList: string[];
-}
+import type { EmailForm } from "@/model";
 
 export default defineComponent({
   components: {
@@ -43,7 +31,7 @@ export default defineComponent({
     BoxArticle,
     BoxForm,
     LoginMain,
-    ModalInfo,
+    ModalMail,
   },
   props: {
     msg: String,
@@ -54,9 +42,14 @@ export default defineComponent({
     const handlerClose = () => {
       isVisibleModal.value = false;
     };
+    const handlerMail = (mail: EmailForm) => {
+      console.log(mail);
+      isVisibleModal.value = false;
+    };
     return {
       isVisibleModal,
       handlerClose,
+      handlerMail,
     };
   },
 });

@@ -18,7 +18,8 @@ div(:class="$style.cont")
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref } from "vue";
+import type {PropType} from "vue";
 import InputReseteable from "./InputReseteable.vue";
 import { BtnIcon } from "../components/btn";
 

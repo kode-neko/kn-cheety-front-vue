@@ -8,14 +8,14 @@ button(:class="[$style.btn]", @click="() => emit('click')")
 </template>
 
 <script setup lang="ts">
-import { Size, Type } from "../../model";
-interface Props {
+import type{ Size, Type } from "../../model";
+type Props = {
   label: string;
   icon: string[];
   size: Size;
   type: Type;
 }
-interface Emit {
+type Emit = {
   (e: "click"): void;
 }
 const props = defineProps<Props>();

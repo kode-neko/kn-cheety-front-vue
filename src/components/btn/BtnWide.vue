@@ -3,15 +3,8 @@ button(:class="[$style.btn, $style[size], type]", @click="() => emit('click')") 
 </template>
 
 <script setup lang="ts">
-enum Type {
-  a,
-  b,
-}
-enum Size {
-  sm,
-  md,
-}
-interface Prop {
+import type { Size, Type } from "../../model";
+type Prop = {
   label: string;
   icon: string[];
   size: Size;

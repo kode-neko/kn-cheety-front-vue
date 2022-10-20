@@ -18,7 +18,7 @@ div(:class="$style.cont")
 </template>
 
 <script lang="ts">
-import Tag from "../model/Tag";
+import type Tag from "../model/Tag";
 import TagInfo from "./TagInfo.vue";
 import { defineComponent, ref, computed } from "vue";
 

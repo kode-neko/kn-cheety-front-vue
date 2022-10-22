@@ -1,36 +1,39 @@
 <template lang="pug">
 div(:class="$style.cont")
   h1(:class="$style.title") Cheety
-  input(:class="$style.user", v-model="userInserted.username")
+  input(:class="$style.user", v-model="userInserted.name")
   input(:class="$style.pass", type="password", v-model="userInserted.pass")
-  BtnWide(label="Login", size="sm", type="a", @click="handleLogin")
-  BtnWide(:class="$style.btnGuest", label="Modo Invitado", size="md", type="b", @click="handleGuest")
+  BtnWide(label="Login", size="sm", type="a", @click="handleClickLogin")
+  BtnWide(:class="$style.btnGuest", label="Modo Invitado", size="md", type="b", @click="handleClickGuest")
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { defineComponent, ref } from "vue";
+import type { PropType } from "vue";
 import { BtnWide } from "../components/btn";
 import type { User } from "../model";
 
 export default defineComponent({
   props: {
-    user: Object as PropType<User>,
+    user: { type: Object as PropType<User>, required: true },
   },
-  emit: ["login", "guest"],
+  emit: ["clickLogin", "clickGuest"],
   components: {
     BtnWide,
   },
   setup(props, { emit }) {
     const userInserted = ref<User>(props.user);
-    const handleLogin = () => {
-      emit("login", userInserted);
+    const handleClickLogin = () => {
+      console.log("handleClickLogin");
+      emit("clickLogin", userInserted);
     };
-    const handleGuest = () => {
-      emit("guest");
+    const handleClickGuest = () => {
+      console.log("handleClickLogin");
+      emit("clickGuest", userInserted);
     };
     return {
-      handleLogin,
-      handleGuest,
+      handleClickLogin,
+      handleClickGuest,
       userInserted,
     };
   },
@@ -46,7 +49,7 @@ export default defineComponent({
     gap pd-md
     padding pd-md
     border-radius br-md
-    max-width 310px
+    width 310px
     .title
         font-family 'Bebas Neue'
         font-size 64px

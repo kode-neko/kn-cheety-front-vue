@@ -21,6 +21,7 @@ body
   background-color color-dark-02
   color color-light
   font-size 18px
+  min-height: 100vh;
   a
     text-decoration none
     color color-light

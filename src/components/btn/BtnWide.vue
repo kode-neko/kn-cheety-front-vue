@@ -1,5 +1,5 @@
 <template lang="pug">
-button(:class="[$style.btn, $style[size], type]", @click="() => emit('click')") {{ label }}
+button(:class="[$style.btn, $style[size], type]", @click="() => $emit('click')") {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -9,7 +9,7 @@ type Prop = {
   icon: string[];
   size: Size;
   type: Type;
-}
+};
 interface Emit {
   (e: "click"): void;
 }

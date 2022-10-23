@@ -160,12 +160,17 @@ export default defineComponent({
       color color-dark
       font-style italic
 .dropMenu
+  position absolute
+  width 100%
+  left 0
   z-index 2
   border 1px solid color-dark
+  box-sizing border-box
   .a
     background-color color-main
     padding pd-md
     border 1px solid color-dark
+    box-sizing border-box
   .b
     background-color color-second
     padding pd-md

@@ -30,5 +30,5 @@ export default defineComponent({
   flex-direction column
   justify-content space-between
 .body
-  flex-basis calc(100vh - 140px)
+  flex-basis calc(100vh - 148px)
 </style>

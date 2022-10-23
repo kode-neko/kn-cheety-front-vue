@@ -65,6 +65,11 @@ library.add({
 
 const app = createApp(App);
 
+const breakpoints = {
+  mobile: 992,
+  web: Infinity,
+};
+
 app.use(createPinia());
 app.use(router);
 app.component("font-awesome-icon", FontAwesomeIcon);

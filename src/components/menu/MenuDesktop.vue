@@ -97,7 +97,6 @@ export default defineComponent({
     justify-content space-between
     background-color color-dark
     padding pd-md
-    margin-top 40px
     box-sizing border-box
     width 100%
     position relative

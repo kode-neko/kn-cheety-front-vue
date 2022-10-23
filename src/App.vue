@@ -3,12 +3,6 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <nav>
-    <ul>
-      <li><RouterLink to="/login">Login</RouterLink></li>
-      <li><RouterLink to="/main">Main</RouterLink></li>
-    </ul>
-  </nav>
   <RouterView />
 </template>
 
@@ -88,4 +82,16 @@ body
   set-size(icon-md)
 .icon-lg
   set-size(icon-lg)
+
+@media all and (max-width: 992px)
+  .desktop
+    display none
+  .mobile
+    display block
+
+@media all and (min-width: 992px)
+  .desktop
+    display block
+  .mobile
+    display none
 </style>

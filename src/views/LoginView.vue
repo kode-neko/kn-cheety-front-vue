@@ -28,9 +28,8 @@ export default defineComponent({
       getUser(user.value.name, user.value.pass)
         .then((res: AuthLoginRespons) => {
           const store = useUserStore();
-          const { user, token } = res;
-          store.setState(user.name, user.email, token);
-          router.replace({ path: "/main" });
+          const { user, accessToken } = res;
+          store.setState(user.name, user.email, accessToken);
           router.push("/main");
         })
         .catch((err) => console.error(err));

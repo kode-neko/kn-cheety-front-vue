@@ -9,6 +9,9 @@ const useUserStore = defineStore({
       email: "",
       token: "",
     } as Pick<User, "name" | "email" | "token">),
+  getters: {
+    getToken: (state) => state.token,
+  },
   actions: {
     setState(name: string, email: string, token: string) {
       this.name = name;

@@ -8,7 +8,7 @@ interface IArticleForm {
   type: ArticleFormType;
   bodyList?: Array<string>;
   body?: string;
-  tagList: Array<Tag>;
+  tags: Array<string>;
 }
 
 class ArticleForm {
@@ -17,7 +17,7 @@ class ArticleForm {
   private _type: ArticleFormType;
   private _bodyList?: Array<string>;
   private _body?: string;
-  private _tagList: Array<Tag>;
+  private _tags: Array<string>;
 
   constructor(iaf?: IArticleForm, a?: IArticle) {
     if (iaf) {
@@ -26,7 +26,7 @@ class ArticleForm {
       this._type = iaf.type ?? ArticleFormType.List;
       this._bodyList = iaf.bodyList ?? [];
       this._body = iaf.body ?? "";
-      this._tagList = iaf.tagList ?? [];
+      this._tags = iaf.tags ?? [];
     } else if (a) {
       this._id = a.id;
       this._title = a.title ?? "";
@@ -34,11 +34,11 @@ class ArticleForm {
         a.body instanceof String ? ArticleFormType.Text : ArticleFormType.List;
       if (a.body instanceof String) this._body = a.body as string;
       else this._bodyList = a.body as Array<string>;
-      this._tagList = a.tagList ?? [];
+      this._tags = a.tags ?? [];
     } else {
       this._title = "";
       this._type = ArticleFormType.List;
-      this._tagList = [];
+      this._tags = [];
     }
   }
 
@@ -47,7 +47,9 @@ class ArticleForm {
       id: this._id,
       title: this._title,
       body: this.body || this._bodyList,
-      tagList: this._tagList,
+      tags: this._tags,
+      author: "",
+      lang: "",
     } as IArticle;
   }
 
@@ -58,7 +60,7 @@ class ArticleForm {
       type: this._type,
       bodyList: this._bodyList,
       body: this._body,
-      tagList: this._tagList,
+      tags: this._tags,
     } as IArticleForm;
   }
 
@@ -97,11 +99,11 @@ class ArticleForm {
     return this._body as string;
   }
 
-  set tagList(val: Array<Tag>) {
-    this._tagList = val;
+  set tags(val: Array<string>) {
+    this._tags = val;
   }
-  get tagList() {
-    return this._tagList;
+  get tags() {
+    return this._tags;
   }
 }
 

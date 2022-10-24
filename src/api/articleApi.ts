@@ -1,8 +1,8 @@
 import { apiUrlList } from "@/globals";
-import type { AuthLoginRespons } from "@/model";
+import type { Article } from "@/model";
 import useUserStore from "../stores/user";
 
-function getArticles(tags: string[]): Promise<AuthLoginRespons> {
+function getArticles(tags: string[]): Promise<Article[]> {
   const store = useUserStore();
   const token = store.getToken;
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleFind}`, {

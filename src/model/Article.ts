@@ -6,20 +6,27 @@ interface IArticle {
   id?: string;
   title: string;
   body: string | Array<string>;
-  tagList: Array<Tag>;
+  tags: Array<string>;
+  author: string;
+  lang: string;
 }
+
 class Article {
   private _id?: string;
   private _title: string;
   private _body: string | Array<string>;
-  private _tagList: Array<Tag>;
+  private _tags: Array<string>;
+  private _author: string;
+  private _lang: string;
 
   constructor(ia?: IArticle, af?: IArticleForm) {
     if (ia) {
       this._id = ia.id;
       this._title = ia.title ?? "";
       this._body = ia.body ?? "";
-      this._tagList = ia.tagList ?? [];
+      this._tags = ia.tags ?? [];
+      this._author = ia.author ?? "";
+      this._lang = ia.lang ?? "";
     } else if (af) {
       this._id = af.id;
       this._title = af.title ?? "";
@@ -27,12 +34,56 @@ class Article {
         af.type === ArticleFormType.List
           ? (af.bodyList as Array<string>)
           : (af.body as string);
-      this._tagList = af.tagList ?? [];
+      this._tags = af.tags ?? [];
+      this._author = "";
+      this._lang = "";
     } else {
       this._title = "";
       this._body = [];
-      this._tagList = [];
+      this._tags = [];
+      this._author = "";
+      this._lang = "";
     }
+  }
+
+  public get title(): string {
+    return this._title;
+  }
+
+  public set title(value: string) {
+    this._title = value;
+  }
+
+  public get body(): string | Array<string> {
+    return this._body;
+  }
+
+  public set body(value: string | Array<string>) {
+    this._body = value;
+  }
+
+  public get tags(): Array<string> {
+    return this._tags;
+  }
+
+  public set tags(value: Array<string>) {
+    this._tags = value;
+  }
+
+  public get author(): string {
+    return this._author;
+  }
+
+  public set author(value: string) {
+    this._author = value;
+  }
+
+  public get lang(): string {
+    return this._lang;
+  }
+
+  public set lang(value: string) {
+    this._lang = value;
   }
 
   toIArticleForm(): IArticleForm {
@@ -45,7 +96,7 @@ class Article {
           : ArticleFormType.List,
       bodyList: this._body as Array<string>,
       body: this._body as string,
-      tagList: this._tagList,
+      tags: this._tags,
     } as IArticleForm;
   }
 
@@ -53,37 +104,11 @@ class Article {
     return {
       id: this._id && undefined,
       title: this._title,
-      body: this._body as string,
-      tagList: this._tagList,
+      body: this._body as string | Array<string>,
+      tags: this._tags,
+      author: this._author,
+      lang: this._lang,
     } as IArticle;
-  }
-
-  set id(val: string) {
-    this._id = val;
-  }
-  get id() {
-    return this._id as string;
-  }
-
-  set title(val: string) {
-    this._id = val;
-  }
-  get title() {
-    return this._title;
-  }
-
-  set body(val: string | Array<string>) {
-    this._body = val;
-  }
-  get body() {
-    return this._body;
-  }
-
-  set tagList(val: Array<Tag>) {
-    this._tagList = val;
-  }
-  get tagList() {
-    return this._tagList;
   }
 }
 

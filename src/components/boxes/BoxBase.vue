@@ -17,6 +17,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
+    title: String,
     editable: Boolean,
     modelValue: String,
   },
@@ -28,11 +29,12 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" module>
-@import "../assets/base"
+@import "../../assets/base"
 .cont
   padding pd-md
   background-color color-dark
   border-radius br-md
+  width 460px
   .title
     font-size 24px
     color color-main

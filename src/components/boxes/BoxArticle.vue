@@ -1,12 +1,15 @@
 <template lang="pug">
 BoxBase(:title="title")
-  div {{ content }}
+  div(v-if="typeof content === 'string'") {{ content }}
+  div(v-else)
+    ul 
+      li(v-for="c in content") {{c}}
   div(:class="$style.footer")
     div(:class="$style.left")
       TagInfo(
-        v-for="tag in tagList",
-        :key="tag.id",
-        :label="tag.label",
+        v-for="tag in tags",
+        :key="tag",
+        :label="tag",
         :type="'a'",
         :isDeletable="false",
         @delete="() => deleteTag(tag)"
@@ -18,9 +21,10 @@ BoxBase(:title="title")
 
 <script lang="ts">
 import BoxBase from "./BoxBase.vue";
-import { BtnIcon } from "../components/btn";
-import TagInfo from "../components/TagInfo.vue";
-import { defineComponent } from "vue";
+import { BtnIcon } from "@/components/btn";
+import TagInfo from "@/components/TagInfo.vue";
+import { defineComponent, PropType } from "vue";
+import { Article, Tag } from "../../model";
 
 export default defineComponent({
   components: {
@@ -31,8 +35,8 @@ export default defineComponent({
   emit: ["edit", "delete"],
   props: {
     title: String,
-    content: String,
-    tagList: Array,
+    content: Object as PropType<string | Array<string>>,
+    tags: Object as PropType<Tag[]>,
   },
   setup(props, { emit }) {
     const handleDelete = () => {
@@ -50,12 +54,18 @@ export default defineComponent({
 </script>
 
 <style lang="stylus" module>
-@import "../assets/base"
+@import "../../assets/base"
 .footer
   display flex
   justify-content space-between
   margin-top pd-md
   .left,.right
-      display flex
-      gap pd-sm
+    display flex
+    gap pd-sm
+  .left
+    flex-wrap wrap
+  .right
+    align-content flex-start
+    align-items flex-start
+    justify-content flex-end
 </style>

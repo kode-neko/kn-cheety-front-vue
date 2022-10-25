@@ -6,7 +6,6 @@ function getUser(name: string, pass: string): Promise<AuthLoginRespons> {
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.login}`, {
     method: "PUT",
     headers: { Authorization: `Basic ${credentials64}` },
-    body: JSON.stringify({ name, pass }),
   })
     .then((data) => data.json())
     .then((data) => data)

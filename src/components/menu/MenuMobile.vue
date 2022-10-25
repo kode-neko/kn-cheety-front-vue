@@ -159,6 +159,8 @@ export default defineComponent({
     &::placeholder
       color color-dark
       font-style italic
+    &:focus
+      outline none
 .dropMenu
   position absolute
   width 100%

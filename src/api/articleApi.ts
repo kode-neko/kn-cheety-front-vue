@@ -7,7 +7,10 @@ function getArticles(tags: string[]): Promise<Article[]> {
   const token = store.getToken;
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleFind}`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ tags }),
   })
     .then((data) => data.json())

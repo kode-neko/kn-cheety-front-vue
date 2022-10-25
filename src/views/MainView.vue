@@ -1,17 +1,18 @@
 <template lang="pug">
 div(:class="$style.cont")
   div(:class="[$style.top, 'desktop']")
-    MenuDesktopVue
+    MenuDesktopVue(@search="search")
   div(:class="[$style.bottom, 'mobile']")
     MenuMobileVue
   div(:class="$style.body")
-    BoxArticleVue(
-      v-for="art in articles" 
-      :key="art.id", 
-      :title="art.title", 
-      :content="art.content", 
-      :tags="art.tags"
-      )
+    TransitionGroup(name="disapear")
+      BoxArticleVue(
+        v-for="art in articles" 
+        :key="art.id", 
+        :title="art.title", 
+        :content="art.content", 
+        :tags="art.tags"
+        )
   div(:class="$style.bottom")
     FooterMainVue(:credentials="credentials")
 </template>
@@ -34,18 +35,24 @@ export default defineComponent({
       "scroll",
       function (evt) {
         console.log("SCROLL", window.scrollY);
-        console.log("HEIGHT", window.innerHeight);
+        console.log("INNER HEIGHT", window.innerHeight);
+        console.log("SCREEN Y", window.screenY);
+        console.log("CLIENT HEIGHT", document.body.clientHeight);
       },
       false
     );
-    return { articles, credentials };
+    const search = (str: string) => {
+      const tags = str.trim().length === 0 ? [] : str.trim().split(" ");
+      getArticles(tags)
+        .then((arts: Article[]) => {
+          articles.value = arts;
+        })
+        .catch((err) => console.error(err));
+    };
+    return { articles, credentials, search };
   },
   mounted() {
-    getArticles([])
-      .then((arts: Article[]) => {
-        this.articles = arts;
-      })
-      .catch((err) => console.error(err));
+    this.search("");
   },
 });
 </script>

@@ -146,6 +146,8 @@ export default defineComponent({
     &::placeholder
       color color-dark
       font-style italic
+    &:focus
+      outline none
 .socialmenu
   background-color color-second
   position absolute

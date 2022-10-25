@@ -19,6 +19,12 @@ div(:class="$style.outer")
       )
   Transition(name="menu")
     div(v-if="isVisibleSearch", :class="$style.searchmenu")
+      BtnIconNoBack(
+        type="a",
+        size="md",
+        :icon="['fa', 'circle-xmark']",
+        @click="() => emit('search', '')"
+      )
       input(
         placeholder="buscar...",
         v-model="searchValue",

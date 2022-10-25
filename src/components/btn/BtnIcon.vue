@@ -7,7 +7,7 @@ button(
     :class="{ 'icon-xs': size == 'sm', 'icon-sm': size == 'md' }",
     :icon="icon"
   )
-  span(:class="$style.label") {{ label }}
+  span(v-if="label" :class="$style.label") {{ label }}
 </template>
 
 <script setup lang="ts">
@@ -17,10 +17,10 @@ type Props = {
   icon: string[];
   size: Size;
   type: Type;
-}
+};
 type Emit = {
   (e: "click"): void;
-}
+};
 const props = defineProps<Props>();
 const emit = defineEmits<Emit>();
 </script>

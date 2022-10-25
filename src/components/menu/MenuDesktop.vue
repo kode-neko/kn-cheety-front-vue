@@ -39,10 +39,15 @@ div(:class="$style.outer")
       )
   Transition(name="menu")
     div(v-if="isVisibleSearch", :class="$style.searchmenu")
+      BtnIconNoBack(
+          size="md",
+          :icon="['fa', 'circle-xmark']",
+          @click="() => handleSearch('')"
+        )
       input(
         placeholder="buscar...",
         v-model="searchValue",
-        @keyup.enter="handleSearch"
+        @keyup.enter="() => handleSearch(searchValue)"
       )
   Transition(name="menu")
     div(v-if="isVisibleSocial", :class="$style.socialmenu")
@@ -67,8 +72,9 @@ export default defineComponent({
   emits: ["search"],
   setup(props, { emit }) {
     const searchValue = ref<string>("");
-    const handleSearch = () => {
-      emit("search", searchValue.value);
+    const handleSearch = (str: string) => {
+      if (str.trim() === "") searchValue.value = "";
+      emit("search", str);
       isVisibleSearch.value = false;
     };
     const handleClickSocial = (social: Social) => {
@@ -135,6 +141,7 @@ export default defineComponent({
   box-sizing border-box
   padding 0 pd-md
   border 1px solid color-dark
+  display flex
   input
     width 100%
     height 100%

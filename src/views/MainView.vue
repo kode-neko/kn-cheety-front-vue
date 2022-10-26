@@ -16,6 +16,8 @@ div(:class="$style.cont")
           )
     div(v-if="!end" :class="$style.bodyBottom")
       BtnIcon(@click="loadMore", :icon="['fa', 'circle-plus']", size="sm", type="a", label="More Articles")
+    div(:class="$style.loading")
+      SpinnerLoad(v-if="loadingStore.isLoadingArticle")
   div(:class="$style.bottom")
     FooterMainVue(:credentials="credentials")
 </template>
@@ -31,6 +33,8 @@ import { getArticles } from "@/api/index";
 import { Article } from "@/model";
 import { results } from "../globals";
 import BtnIcon from "@/components/btn/BtnIcon.vue";
+import useLoadingStore from "@/stores/loading";
+import SpinnerLoad from "@/components/SpinnerLoad.vue";
 
 export default defineComponent({
   components: {
@@ -39,6 +43,7 @@ export default defineComponent({
     FooterMainVue,
     BoxArticleVue,
     BtnIcon,
+    SpinnerLoad,
   },
   setup() {
     const articles = ref<Article[]>([]);
@@ -46,6 +51,7 @@ export default defineComponent({
     const limit = ref<number>(results);
     const skip = ref<number>(0);
     const end = ref<boolean>(false);
+    const loadingStore = useLoadingStore();
 
     const search = (
       str: string,
@@ -53,14 +59,17 @@ export default defineComponent({
       limit: number,
       skip: number
     ) => {
+      loadingStore.setLoadingArticle(true);
       strSaved.value = str;
       const tags = str.length === 0 ? [] : str.split(" ");
       getArticles(tags, limit, skip)
         .then((arts: Article[]) => {
+          loadingStore.setLoadingArticle(false);
           articles.value = [...articlesPrev, ...arts];
           checkEnd(arts.length, limit);
         })
         .catch((err) => {
+          loadingStore.setLoadingArticle(false);
           checkEnd(articles.value.length, limit);
           console.error(err);
         });
@@ -88,12 +97,14 @@ export default defineComponent({
         end.value = true;
       }
     };
+
     return {
       articles,
       strSaved,
       limit,
       skip,
       end,
+      loadingStore,
       search,
       loadMore,
       searchInput,
@@ -101,6 +112,7 @@ export default defineComponent({
     };
   },
   mounted() {
+    this.loadingStore.setLoadingArticle(true);
     this.search("", this.articles as Article[], this.limit, this.skip);
   },
 });
@@ -118,6 +130,10 @@ export default defineComponent({
   display flex
   flex-direction column
   gap pd-md
+  .loading
+    display flex
+    align-items center
+    justify-content center
   .bodyContent
     display flex
     gap pd-md

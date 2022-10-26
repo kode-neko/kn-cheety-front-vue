@@ -29,6 +29,7 @@ div(:class="$style.outer")
         type="a",
         size="md",
         :icon="['fas', 'arrow-right-from-bracket']"
+        @click="logout"
       )
       SwTypeForm(
         :valLeft="'moon'",
@@ -64,6 +65,7 @@ import { Social } from "../../model";
 import { socialList } from "../../globals";
 import { defineComponent, ref } from "vue";
 import { BtnIcon, BtnIconNoBack } from "../btn";
+import router from "@/router";
 import SquareIcon from "../SquareIcon.vue";
 import SwTypeForm from "../sw/SwTypeForm.vue";
 
@@ -74,7 +76,7 @@ export default defineComponent({
     const searchValue = ref<string>("");
     const handleSearch = (str: string) => {
       if (str.trim() === "") searchValue.value = "";
-      emit("search", str);
+      emit("search", str.trim());
       isVisibleSearch.value = false;
     };
     const handleClickSocial = (social: Social) => {
@@ -82,6 +84,7 @@ export default defineComponent({
     };
     const isVisibleSearch = ref<boolean>(false);
     const isVisibleSocial = ref<boolean>(false);
+    const logout = () => router.push("/login");
     return {
       searchValue,
       handleSearch,
@@ -89,6 +92,7 @@ export default defineComponent({
       isVisibleSearch,
       isVisibleSocial,
       socialList,
+      logout,
     };
   },
 });

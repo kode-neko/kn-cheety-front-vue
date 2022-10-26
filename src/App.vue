@@ -3,7 +3,9 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <RouterView />
+  <transition name="disapear">
+    <RouterView />
+  </transition>
 </template>
 
 <style lang="stylus">

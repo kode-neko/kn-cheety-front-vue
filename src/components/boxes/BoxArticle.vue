@@ -2,7 +2,7 @@
 BoxBase(:title="title")
   div(v-if="typeof content === 'string'") {{ content }}
   div(v-else)
-    ul 
+    ul(:class="$style.list") 
       li(v-for="c in content") {{c}}
   div(:class="$style.footer")
     div(:class="$style.left")
@@ -55,6 +55,10 @@ export default defineComponent({
 
 <style lang="stylus" module>
 @import "../../assets/base"
+
+.list
+  list-style disc
+  padding-left pd-md
 .footer
   display flex
   justify-content space-between

@@ -15,8 +15,8 @@ BoxBase(:title="title")
         @delete="() => deleteTag(tag)"
       )
     div(:class="$style.right")
-      BtnIcon(:icon="['fa', 'trash-can']", size="sm", type="b")
-      BtnIcon(:icon="['fas', 'pencil']", size="sm", type="b")
+      BtnIcon(@click="handleDelete", :icon="['fa', 'trash-can']", size="sm", type="b")
+      BtnIcon(@click="handleEdit", :icon="['fas', 'pencil']", size="sm", type="b")
 </template>
 
 <script lang="ts">
@@ -25,12 +25,14 @@ import { BtnIcon } from "@/components/btn";
 import TagInfo from "@/components/TagInfo.vue";
 import { defineComponent, PropType } from "vue";
 import { Article, Tag } from "../../model";
+import ModalInfo from "@/modal/ModalInfo.vue";
 
 export default defineComponent({
   components: {
     BoxBase,
     BtnIcon,
     TagInfo,
+    ModalInfo,
   },
   emit: ["edit", "delete"],
   props: {
@@ -39,12 +41,8 @@ export default defineComponent({
     tags: Object as PropType<Tag[]>,
   },
   setup(props, { emit }) {
-    const handleDelete = () => {
-      emit("delete");
-    };
-    const handleEdit = () => {
-      emit("edit");
-    };
+    const handleDelete = () => emit("delete");
+    const handleEdit = () => emit("edit");
     return {
       handleDelete,
       handleEdit,

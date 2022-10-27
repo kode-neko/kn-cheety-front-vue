@@ -24,6 +24,8 @@ import {
   faArrowRightFromBracket,
   faTrashCan as faTrashCanSolid,
   faFilter,
+  faCircleInfo,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
@@ -57,6 +59,8 @@ library.add({
   faArrowRightFromBracket,
   faTrashCanSolid,
   faFilter,
+  faCircleInfo,
+  faTriangleExclamation,
   faFacebook,
   faTwitter,
   faGithub,
@@ -64,12 +68,6 @@ library.add({
 });
 
 const app = createApp(App);
-
-const breakpoints = {
-  mobile: 992,
-  web: Infinity,
-};
-
 app.use(createPinia());
 app.use(router);
 app.component("font-awesome-icon", FontAwesomeIcon);

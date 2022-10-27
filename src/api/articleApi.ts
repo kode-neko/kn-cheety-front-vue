@@ -18,8 +18,23 @@ function getArticles(
     body: JSON.stringify({ tags, skip, limit }),
   })
     .then((data) => data.json())
-    .then((data) => data)
-    .catch((err) => err);
+    .then((data) => data);
+  // .catch((err) => err);
 }
 
-export { getArticles };
+function deleteArticles(id: string): Promise<boolean> {
+  const store = useUserStore();
+  const token = store.getToken;
+  return fetch(
+    `${import.meta.env.VITE_API_URL}${apiUrlList.articleDelete}/${id}`,
+    {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  )
+    .then((data) => data.json())
+    .then((data) => data.affected > 0);
+  // .catch((err) => err);
+}
+
+export { getArticles, deleteArticles };

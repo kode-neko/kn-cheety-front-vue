@@ -36,15 +36,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const handleClose = () => {
-      emit("close");
-    };
-    const handleLeft = () => {
-      emit("left");
-    };
-    const handleRight = () => {
-      emit("right");
-    };
+    const handleClose = () => emit("close");
+    const handleLeft = () => emit("left");
+    const handleRight = () => emit("right");
     return {
       handleClose,
       handleLeft,
@@ -57,6 +51,7 @@ export default defineComponent({
 <style module lang="stylus">
 @import "../assets/base"
 .cont
+  box-shadow: 5px 10px 8px color-dark-shadow;
   box-sizing border-box
   border-radius br-md
   background-color color-dark

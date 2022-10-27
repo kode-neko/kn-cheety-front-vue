@@ -13,13 +13,24 @@ div(:class="$style.cont")
           :title="art.title", 
           :content="art.content", 
           :tags="art.tags"
-          )
+          @delete="() => handleDelete(art.id)"
+        )
     div(v-if="!end" :class="$style.bodyBottom")
       BtnIcon(@click="loadMore", :icon="['fa', 'circle-plus']", size="sm", type="a", label="More Articles")
     div(:class="$style.loading")
       SpinnerLoad(v-if="loadingStore.isLoadingArticle")
   div(:class="$style.bottom")
     FooterMainVue(:credentials="credentials")
+  ModalInfo(
+    @close="handleCloseModal",
+    @left="handleCloseModal",
+    @right="handleAcceptModal",
+    :isVisible="visibleModalDelete", 
+    :icon="['fa', 'trash-can']", 
+    msg="¿Desea borrar el artículo?", 
+    labelIzq="Cancelar", 
+    label-der="Borrar"
+  )
 </template>
 
 <script lang="ts">
@@ -29,12 +40,13 @@ import MenuMobileVue from "@/components/menu/MenuMobile.vue";
 import FooterMainVue from "@/components/FooterMain.vue";
 import BoxArticleVue from "@/components/boxes/BoxArticle.vue";
 import { credentials } from "@/globals";
-import { getArticles } from "@/api/index";
+import { getArticles, deleteArticles } from "@/api/index";
 import { Article } from "@/model";
 import { results } from "../globals";
 import BtnIcon from "@/components/btn/BtnIcon.vue";
 import useLoadingStore from "@/stores/loading";
 import SpinnerLoad from "@/components/SpinnerLoad.vue";
+import ModalInfo from "../modal/ModalInfo.vue";
 
 export default defineComponent({
   components: {
@@ -44,6 +56,7 @@ export default defineComponent({
     BoxArticleVue,
     BtnIcon,
     SpinnerLoad,
+    ModalInfo,
   },
   setup() {
     const articles = ref<Article[]>([]);
@@ -52,6 +65,8 @@ export default defineComponent({
     const skip = ref<number>(0);
     const end = ref<boolean>(false);
     const loadingStore = useLoadingStore();
+    const visibleModalDelete = ref<boolean>(false);
+    const selectedArt = ref<string>("");
 
     const search = (
       str: string,
@@ -88,6 +103,7 @@ export default defineComponent({
     const searchInput = (str: string) => {
       if (strSaved.value === str) return;
       articles.value = [];
+      skip.value = 0;
       end.value = false;
       search(str, articles.value as Article[], limit.value, skip.value);
     };
@@ -96,6 +112,31 @@ export default defineComponent({
       if (artsLength === 0 || artsLength < limit) {
         end.value = true;
       }
+    };
+
+    const handleDelete = (id: string) => {
+      selectedArt.value = id;
+      visibleModalDelete.value = true;
+    };
+    const handleCloseModal = () => (visibleModalDelete.value = false);
+    const handleAcceptModal = () => {
+      visibleModalDelete.value = false;
+      deleteArticles(selectedArt.value)
+        .then((isDeleted) => {
+          if (isDeleted) {
+            const slicedArticles = articles.value.slice(
+              0,
+              articles.value.length - limit.value
+            );
+            search(
+              strSaved.value,
+              slicedArticles as Article[],
+              limit.value,
+              skip.value
+            );
+          }
+        })
+        .catch((err) => console.log(err));
     };
 
     return {
@@ -109,6 +150,10 @@ export default defineComponent({
       loadMore,
       searchInput,
       credentials,
+      visibleModalDelete,
+      handleDelete,
+      handleCloseModal,
+      handleAcceptModal,
     };
   },
   mounted() {

@@ -14,7 +14,10 @@ function articleFormToIArticle(artForm: IArticleForm): IArticle {
   return {
     id: artForm.id,
     title: artForm.title,
-    content: artForm.content || artForm.contentList,
+    content:
+      artForm.type === ArticleFormType.List
+        ? artForm.contentList
+        : artForm.content,
     tags: artForm.tags,
     author: "",
     lang: "",

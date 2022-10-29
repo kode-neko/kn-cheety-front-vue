@@ -2,7 +2,7 @@
 FrameView(:search="searchInput")
   template(#form)
     div(:class="$style.cont")
-      BoxForm(:article="articleForm")
+      BoxForm(:article="articleForm", @save="handleSave")
     
 </template>
 
@@ -11,7 +11,12 @@ import { defineComponent, ref } from "vue";
 import type { PropType } from "vue";
 import FrameView from "./FrameView.vue";
 import { BoxForm } from "@/components/boxes";
-import { ArticleFormType, articleToIArticleForm, IArticleForm } from "../model";
+import {
+  ArticleFormType,
+  articleToIArticleForm,
+  IArticle,
+  IArticleForm,
+} from "../model";
 import useUserStore from "@/stores/user";
 import { getArticle } from "@/api";
 
@@ -28,7 +33,10 @@ export default defineComponent({
       content: "",
       tags: [],
     });
-    return { articleForm };
+    const handleSave = (art: IArticle) => {
+      console.log(art);
+    };
+    return { articleForm, handleSave };
   },
   mounted() {
     const userStore = useUserStore();

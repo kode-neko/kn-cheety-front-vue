@@ -3,7 +3,7 @@ div(:class="$style.cont")
   BoxBase(
     :editable="true",
     :modelValue="afState.title",
-    @update:modelValue="(newVal) => (afState.title = newVal)"
+    @update:modelValue="updateTitle"
   )
     div(:class="$style.form")
       SwTypeForm(
@@ -17,17 +17,16 @@ div(:class="$style.cont")
         InputAddList(
           v-if="afState.type === 'list'",
           :modelValue="afState.contentList",
-          @update:modelValue="(newVal) => (afState.contentList = newVal)"
+          @update:modelValue="updateContentList"
         )
-      Transition(name="disapear")
         textarea(
-          v-if="afState.type === 'text'", 
+          v-else, 
           :class="$style.txtarea", 
           v-model="afState.content"
         )
       InputTagList(
         :modelValue="afState.tagList",
-        @update:modelValue="(newVal) => (afState.tagList = newVal)",
+        @update:modelValue="updateTagList",
         placeholder="Introduzca las etiquetas"
       )
   div(:class="$style.btns")
@@ -96,12 +95,24 @@ export default defineComponent({
         afState.value = act as IArticleForm;
       }
     );
+    const updateTitle = (newTitle: string) => {
+      afState.value.title = newTitle;
+    };
+    const updateContentList = (newContentList: Array<string>) => {
+      afState.value.contentList = newContentList;
+    };
+    const updateTagList = (newTagList: Array<string>) => {
+      afState.value.tags = newTagList;
+    };
     return {
       isVisibleList,
       afState,
       swFormType,
       handleDelete,
       handleSave,
+      updateTitle,
+      updateContentList,
+      updateTagList,
     };
   },
 });

@@ -28,7 +28,10 @@ function articleToIArticle(artForm: IArticleForm): IArticle {
   return {
     id: artForm.id && undefined,
     title: artForm.title,
-    content: artForm.content as string | Array<string>,
+    content:
+      artForm.type === ArticleFormType.List
+        ? artForm.contentList
+        : artForm.content,
     tags: artForm.tags,
     author: "",
     lang: "",

@@ -11,8 +11,8 @@ div(:class="$style.cont")
     TransitionGroup(name="disapear")
       TagInfo(
         v-for="tag in tagList",
-        :key="tag.id",
-        :label="tag.label",
+        :key="tag",
+        :label="tag",
         :type="'a'",
         :isDeletable="true",
         @delete="() => deleteTag(tag)"
@@ -20,46 +20,40 @@ div(:class="$style.cont")
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, PropType, watch } from "vue";
 import TagInfo from "./TagInfo.vue";
-import Tag from "../model/Tag";
-
-interface Props {
-  initTagList: Array<unknown>;
-  placeholder: string;
-}
-
-interface Emits {
-  (e: "update:modelValue", value: Array<Tag>): void;
-}
 
 export default defineComponent({
   props: {
-    modelValue: Array,
+    modelValue: Object as PropType<Array<string>>,
     placeholder: String,
   },
   components: { TagInfo },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const tagList = ref(props.modelValue);
-    const valTag = ref("");
+    const tagList = ref<Array<string>>([]);
+    const valTag = ref<string>("");
     const chkKey = (event) => {
       if (!/[a-zA-Z0-9]/.test(event.key)) event.preventDefault();
     };
-    const deleteTag = (tag) => {
-      tagList.value = tagList.value.filter(
-        (tagAux: Tag) => tagAux.id !== tag.id
-      );
+    const deleteTag = (tag: string) => {
+      tagList.value = tagList.value.filter((t: string) => t !== tag);
       emit("update:modelValue", tagList);
     };
     const insertTag = (value: string) => {
-      if (!tagList.value.find((tag: Tag) => tag.label === value)) {
+      if (!tagList.value.find((tag: string) => tag === value)) {
         const valTrim = value.trim().toLowerCase();
-        tagList.value = [...tagList.value, { id: valTrim, label: valTrim }];
+        tagList.value = [...tagList.value, valTrim];
         emit("update:modelValue", tagList.value);
         valTag.value = "";
       }
     };
+    watch(
+      () => props.modelValue,
+      (act) => {
+        tagList.value = act as Array<string>;
+      }
+    );
     return {
       tagList,
       valTag,

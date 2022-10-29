@@ -1,3 +1,18 @@
+<template lang="pug">
+div(:class="$style.cont")
+  input(
+    :value="modelValue",
+    :class="$style.input",
+    :placeholder="placeholder",
+    @input="(e) => updateContent(e)"
+  )
+  font-awesome-icon(
+    :class="$style.icon",
+    :icon="['fa', 'circle-xmark']",
+    @click="deleteContent"
+  )
+</template>
+
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 
@@ -23,21 +38,6 @@ export default defineComponent({
   },
 });
 </script>
-
-<template lang="pug">
-div(:class="$style.cont")
-  input(
-    :value="modelValue",
-    :class="$style.input",
-    :placeholder="placeholder",
-    @input="(e) => updateContent(e)"
-  )
-  font-awesome-icon(
-    :class="$style.icon",
-    :icon="['fa', 'circle-xmark']",
-    @click="deleteContent"
-  )
-</template>
 
 <style lang="stylus" module>
 @import "../assets/base"

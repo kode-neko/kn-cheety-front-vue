@@ -15,11 +15,16 @@ div(:class="$style.cont")
       )
       Transition(name="disapear")
         InputAddList(
-          v-if="isVisibleList",
-          :modelValue="afState.bodyList",
-          @update:modelValue="(newVal) => (afState.bodyList = newVal)"
+          v-if="afState.type === 'list'",
+          :modelValue="afState.contentList",
+          @update:modelValue="(newVal) => (afState.contentList = newVal)"
         )
-        textarea(v-else, :class="$style.txtarea", v-model="afState.body")
+      Transition(name="disapear")
+        textarea(
+          v-if="afState.type === 'text'", 
+          :class="$style.txtarea", 
+          v-model="afState.content"
+        )
       InputTagList(
         :modelValue="afState.tagList",
         @update:modelValue="(newVal) => (afState.tagList = newVal)",
@@ -41,9 +46,9 @@ import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "@/components/sw/SwTypeForm.vue";
 import InputTagList from "@/components/InputTagList.vue";
 import InputAddList from "@/components/InputAddList.vue";
-import { articleToIArticleForm, IArticle, IArticleForm } from "@/model";
+import { IArticleForm } from "@/model";
 import { BtnIcon } from "@/components/btn";
-import { defineComponent, ref, PropType } from "vue";
+import { defineComponent, ref, PropType, watch } from "vue";
 import { articleFormToIArticle, ArticleFormType } from "../../model";
 
 export default defineComponent({
@@ -54,15 +59,25 @@ export default defineComponent({
     InputAddList,
     BtnIcon,
   },
-  emit: ["delete", "save"],
+  emit: ["save"],
   props: {
-    article: Object as PropType<IArticle>,
+    article: {
+      type: Object as PropType<IArticleForm>,
+      required: false,
+    },
   },
   setup(props, { emit }) {
+    const af =
+      props.article ||
+      ({
+        title: "",
+        type: undefined,
+        contentList: [],
+        content: "",
+        tags: [],
+      } as IArticleForm);
     const isVisibleList = ref<boolean>(true);
-    const af = articleToIArticleForm(props.article as IArticle);
-    const aux = { ...af };
-    const afState = ref<IArticleForm>(aux);
+    const afState = ref<IArticleForm>(af);
     const swFormType = (val: ArticleFormType) => {
       isVisibleList.value = val === "list";
       afState.value.type = val;
@@ -74,6 +89,13 @@ export default defineComponent({
       const articleSaved = articleFormToIArticle(afState.value);
       emit("save", articleSaved);
     };
+    watch(
+      () => props.article,
+      (act) => {
+        swFormType(act?.type as ArticleFormType);
+        afState.value = act as IArticleForm;
+      }
+    );
     return {
       isVisibleList,
       afState,

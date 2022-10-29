@@ -4,9 +4,9 @@ import ArticleFormType from "./ArticleFormType";
 interface IArticleForm {
   id?: string;
   title: string;
-  type: ArticleFormType;
-  bodyList?: Array<string>;
-  body?: string;
+  type?: ArticleFormType;
+  contentList?: Array<string>;
+  content?: string;
   tags: Array<string>;
 }
 
@@ -14,7 +14,7 @@ function articleFormToIArticle(artForm: IArticleForm): IArticle {
   return {
     id: artForm.id,
     title: artForm.title,
-    body: artForm.body || artForm.bodyList,
+    content: artForm.content || artForm.contentList,
     tags: artForm.tags,
     author: "",
     lang: "",
@@ -26,9 +26,11 @@ function articleFormToIArticleForm(art: IArticle): IArticleForm {
     id: art.id,
     title: art.title,
     type:
-      art.body instanceof String ? ArticleFormType.Text : ArticleFormType.List,
-    bodyList: art.body as Array<string>,
-    body: art.body,
+      typeof art.content === "string"
+        ? ArticleFormType.Text
+        : ArticleFormType.List,
+    contentList: typeof art.content === "string" ? undefined : art.content,
+    content: typeof art.content === "string" ? art.content : undefined,
     tags: art.tags,
   } as IArticleForm;
 }

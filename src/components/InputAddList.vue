@@ -18,23 +18,28 @@ div(:class="$style.cont")
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import type {PropType} from "vue";
+import { defineComponent, ref, watch } from "vue";
+import type { PropType } from "vue";
 import InputReseteable from "./InputReseteable.vue";
 import { BtnIcon } from "../components/btn";
 
 export default defineComponent({
   props: {
-    modelValue: Object as PropType<Array<string>>,
+    modelValue: {
+      type: Object as PropType<Array<string>>,
+      default: () => {
+        return new Array<string>();
+      },
+    },
   },
   components: { InputReseteable, BtnIcon },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const lineList = ref<Array<string>>(props.modelValue);
+    const lineList = ref<Array<string>>(props.modelValue as Array<string>);
     if (lineList.value.length === 0) {
       lineList.value = [""];
     }
-    const handleModifyList = (newVal, indexMod) => {
+    const handleModifyList = (newVal: string, indexMod: number) => {
       console.log("handleModifyList");
       lineList.value = lineList.value.map((ele, index) =>
         index === indexMod ? newVal : ele
@@ -42,7 +47,7 @@ export default defineComponent({
       let externalList = lineList.value.filter((ele) => ele.length !== 0);
       emit("update:modelValue", externalList);
     };
-    const handleDelete = (indexDeleted) => {
+    const handleDelete = (indexDeleted: number) => {
       const listAux = lineList.value.filter(
         (ele, index) => index !== indexDeleted
       );
@@ -53,6 +58,12 @@ export default defineComponent({
     const addLine = () => {
       lineList.value = [...lineList.value, ""];
     };
+    watch(
+      () => props.modelValue,
+      (act, prev) => {
+        lineList.value = act as Array<string>;
+      }
+    );
     return {
       lineList,
       handleModifyList,

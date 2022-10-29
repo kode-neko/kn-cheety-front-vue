@@ -2,7 +2,7 @@
 FrameView(:search="searchInput")
   template(#form)
     div(:class="$style.cont")
-      BoxForm(:article="article")
+      BoxForm(:article="articleForm")
     
 </template>
 
@@ -11,7 +11,7 @@ import { defineComponent, ref } from "vue";
 import type { PropType } from "vue";
 import FrameView from "./FrameView.vue";
 import { BoxForm } from "@/components/boxes";
-import { IArticle } from "../model";
+import { ArticleFormType, articleToIArticleForm, IArticleForm } from "../model";
 import useUserStore from "@/stores/user";
 import { getArticle } from "@/api";
 
@@ -20,23 +20,24 @@ export default defineComponent({
     FrameView,
     BoxForm,
   },
-  props: {},
   setup() {
-    const article = ref<IArticle>({
+    const articleForm = ref<IArticleForm>({
       title: "",
-      body: "" as string,
+      type: undefined,
+      contentList: [],
+      content: "",
       tags: [],
-      author: "",
-      lang: "es",
     });
-    return { article };
+    return { articleForm };
   },
   mounted() {
     const userStore = useUserStore();
     const idArticle = userStore.getArticle;
     if (idArticle) {
       getArticle(idArticle)
-        .then((art) => (this.article = art))
+        .then((art) => {
+          this.articleForm = articleToIArticleForm(art);
+        })
         .catch((err) => console.log(err));
     }
   },

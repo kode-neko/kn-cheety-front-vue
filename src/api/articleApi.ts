@@ -1,7 +1,6 @@
 import { apiUrlList } from "@/globals";
 import type { Article, IArticle } from "@/model";
 import { createHeaderToken } from "@/utils";
-import useUserStore from "../stores/user";
 
 function getArticles(
   tags: string[],

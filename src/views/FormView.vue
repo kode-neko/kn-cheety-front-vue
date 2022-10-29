@@ -14,6 +14,7 @@ import { BoxForm } from "@/components/boxes";
 import type { Article } from "@/model";
 import { IArticle } from "../model";
 import useUserStore from "@/stores/user";
+import { getArticle } from "@/api";
 
 export default defineComponent({
   components: {
@@ -31,7 +32,15 @@ export default defineComponent({
     });
     return { article };
   },
-  mounted() {},
+  mounted() {
+    const userStore = useUserStore();
+    const idArticle = userStore.getArticle;
+    if (idArticle) {
+      getArticle(idArticle)
+        .then((art) => (this.article = art))
+        .catch((err) => console.log(err));
+    }
+  },
   unmounted() {
     const userStore = useUserStore();
     userStore.deleteArticle();

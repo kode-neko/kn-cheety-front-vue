@@ -11,7 +11,6 @@ import { defineComponent, ref } from "vue";
 import type { PropType } from "vue";
 import FrameView from "./FrameView.vue";
 import { BoxForm } from "@/components/boxes";
-import type { Article } from "@/model";
 import { IArticle } from "../model";
 import useUserStore from "@/stores/user";
 import { getArticle } from "@/api";

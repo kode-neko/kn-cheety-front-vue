@@ -19,7 +19,7 @@ import MenuMobileVue from "@/components/menu/MenuMobile.vue";
 import FooterMainVue from "@/components/FooterMain.vue";
 import { credentials } from "@/globals";
 import { getArticles, deleteArticles } from "@/api/index";
-import type { Article } from "@/model";
+import type { IArticle } from "@/model";
 import { results } from "../globals";
 import useLoadingStore from "@/stores/loading";
 
@@ -29,11 +29,8 @@ export default defineComponent({
     MenuMobileVue,
     FooterMainVue,
   },
-  props: {
-    articles: Object as PropType<Article[]>,
-  },
   setup() {
-    const articles = ref<Article[]>([]);
+    const articles = ref<IArticle[]>([]);
     const strSaved = ref<string>("");
     const limit = ref<number>(results);
     const skip = ref<number>(0);
@@ -44,7 +41,7 @@ export default defineComponent({
 
     const search = (
       str: string,
-      articlesPrev: Article[],
+      articlesPrev: IArticle[],
       limit: number,
       skip: number
     ) => {
@@ -52,7 +49,7 @@ export default defineComponent({
       strSaved.value = str;
       const tags = str.length === 0 ? [] : str.split(" ");
       getArticles(tags, limit, skip)
-        .then((arts: Article[]) => {
+        .then((arts: IArticle[]) => {
           loadingStore.setLoadingArticle(false);
           articles.value = [...articlesPrev, ...arts];
           checkEnd(arts.length, limit);
@@ -68,7 +65,7 @@ export default defineComponent({
       skip.value += limit.value;
       search(
         strSaved.value,
-        articles.value as Article[],
+        articles.value as IArticle[],
         limit.value,
         skip.value
       );
@@ -79,7 +76,7 @@ export default defineComponent({
       articles.value = [];
       skip.value = 0;
       end.value = false;
-      search(str, articles.value as Article[], limit.value, skip.value);
+      search(str, articles.value as IArticle[], limit.value, skip.value);
     };
 
     const checkEnd = (artsLength: number, limit: number) => {
@@ -104,7 +101,7 @@ export default defineComponent({
             );
             search(
               strSaved.value,
-              slicedArticles as Article[],
+              slicedArticles as IArticle[],
               limit.value,
               skip.value
             );
@@ -132,7 +129,7 @@ export default defineComponent({
   },
   mounted() {
     this.loadingStore.setLoadingArticle(true);
-    this.search("", this.articles as Article[], this.limit, this.skip);
+    this.search("", this.articles as IArticle[], this.limit, this.skip);
   },
 });
 </script>

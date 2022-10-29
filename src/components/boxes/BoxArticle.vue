@@ -24,7 +24,7 @@ import BoxBase from "./BoxBase.vue";
 import { BtnIcon } from "@/components/btn";
 import TagInfo from "@/components/TagInfo.vue";
 import { defineComponent, PropType } from "vue";
-import { Article, Tag } from "../../model";
+import { Tag } from "../../model";
 import ModalInfo from "@/modal/ModalInfo.vue";
 
 export default defineComponent({

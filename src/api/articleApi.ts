@@ -1,12 +1,12 @@
 import { apiUrlList } from "@/globals";
-import type { Article, IArticle } from "@/model";
+import type { IArticle } from "@/model";
 import { createHeaderToken } from "@/utils";
 
 function getArticles(
   tags: string[],
   limit: number,
   skip: number
-): Promise<Article[]> {
+): Promise<IArticle[]> {
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleFind}`, {
     method: "POST",
     headers: {

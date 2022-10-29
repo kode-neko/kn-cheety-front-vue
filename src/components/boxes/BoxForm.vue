@@ -41,9 +41,10 @@ import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "@/components/sw/SwTypeForm.vue";
 import InputTagList from "@/components/InputTagList.vue";
 import InputAddList from "@/components/InputAddList.vue";
-import { Article, ArticleForm, IArticleForm } from "@/model";
+import { articleToIArticleForm, IArticle, IArticleForm } from "@/model";
 import { BtnIcon } from "@/components/btn";
 import { defineComponent, ref, PropType } from "vue";
+import { articleFormToIArticle, ArticleFormType } from "../../model";
 
 export default defineComponent({
   components: {
@@ -55,14 +56,14 @@ export default defineComponent({
   },
   emit: ["delete", "save"],
   props: {
-    article: Object as PropType<Article>,
+    article: Object as PropType<IArticle>,
   },
   setup(props, { emit }) {
     const isVisibleList = ref<boolean>(true);
-    const af = new ArticleForm(undefined, props.article);
-    const aux = af.toIArticleForm();
+    const af = articleToIArticleForm(props.article as IArticle);
+    const aux = { ...af };
     const afState = ref<IArticleForm>(aux);
-    const swFormType = (val) => {
+    const swFormType = (val: ArticleFormType) => {
       isVisibleList.value = val === "list";
       afState.value.type = val;
     };
@@ -70,7 +71,7 @@ export default defineComponent({
       emit("delete");
     };
     const handleSave = () => {
-      const articleSaved = new Article(undefined, afState.value);
+      const articleSaved = articleFormToIArticle(afState.value);
       emit("save", articleSaved);
     };
     return {

@@ -2,13 +2,15 @@
 div(:class="$style.outer")
   div(:class="$style.cont")
     div(:class="$style.left")
-      h1 Cheety
+      router-link(to="/main")
+        h1 Cheety
       div(:class="$style.ctrls")
         BtnIcon(
           label="Create",
           :icon="['fas', 'circle-plus']",
           size="sm",
           type="a"
+          @click="handleNewArticle"
         )
         BtnIconNoBack(
           type="a",
@@ -76,6 +78,8 @@ export default defineComponent({
     const searchValue = ref<string>("");
     const handleSearch = (str: string) => {
       if (str.trim() === "") searchValue.value = "";
+      const path = router.currentRoute.value.path;
+      if (path !== "/main") router.push("/main");
       emit("search", str.trim());
       isVisibleSearch.value = false;
     };
@@ -85,6 +89,7 @@ export default defineComponent({
     const isVisibleSearch = ref<boolean>(false);
     const isVisibleSocial = ref<boolean>(false);
     const logout = () => router.push("/login");
+    const handleNewArticle = () => router.push("/form");
     return {
       searchValue,
       handleSearch,
@@ -93,6 +98,7 @@ export default defineComponent({
       isVisibleSocial,
       socialList,
       logout,
+      handleNewArticle,
     };
   },
 });

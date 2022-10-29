@@ -1,5 +1,9 @@
-import type { User } from "@/model";
+import type { IArticle, User } from "@/model";
 import { defineStore } from "pinia";
+
+interface UserState extends Pick<User, "name" | "email" | "token"> {
+  article: IArticle["id"];
+}
 
 const useUserStore = defineStore({
   id: "user",
@@ -8,9 +12,11 @@ const useUserStore = defineStore({
       name: "",
       email: "",
       token: "",
-    } as Pick<User, "name" | "email" | "token">),
+      article: "",
+    } as UserState),
   getters: {
     getToken: (state) => state.token,
+    getArticle: (state) => state.article,
   },
   actions: {
     setState(name: string, email: string, token: string) {
@@ -24,6 +30,12 @@ const useUserStore = defineStore({
       this.email = "";
       this.token = "";
       localStorage.removeItem("token");
+    },
+    saveArticle(id: string) {
+      this.article = id;
+    },
+    deleteArticle() {
+      this.article = "";
     },
   },
 });

@@ -1,31 +1,14 @@
 <template lang="pug">
-FrameView(:search="searchInput")
-  template(#article)
-    div(:class="$style.bodyContent")
-      TransitionGroup(name="disapear")
-        BoxArticleVue(
-          v-for="art in articles" 
-          :key="art.id", 
-          :title="art.title", 
-          :content="art.content", 
-          :tags="art.tags"
-          @delete="() => handleDelete(art.id)"
-          @edit="() => handleEdit(art.id)"
-        )
-    div(v-if="!end" :class="$style.bodyBottom")
-      BtnIcon(@click="loadMore", :icon="['fa', 'circle-plus']", size="sm", type="a", label="More Articles")
-    div(:class="$style.loading")
-      SpinnerLoad(v-if="loadingStore.isLoadingArticle")
-    ModalInfo(
-      @close="handleCloseModal",
-      @left="handleCloseModal",
-      @right="handleAcceptModal",
-      :isVisible="visibleModalDelete", 
-      :icon="['fa', 'trash-can']", 
-      msg="¿Desea borrar el artículo?", 
-      labelIzq="Cancelar", 
-      label-der="Borrar"
-    )
+div(:class="$style.cont")
+  div(:class="[$style.top, 'desktop']")
+    MenuDesktopVue(@search="searchInput")
+  div(:class="[$style.bottom, 'mobile']")
+    MenuMobileVue(@search="searchInput")
+  div(:class="$style.body")
+    slot(name="article")
+    slot(name="form")
+  div(:class="$style.bottom")
+    FooterMainVue(:credentials="credentials")
 </template>
 
 <script lang="ts">
@@ -34,29 +17,20 @@ import type { PropType } from "vue";
 import MenuDesktopVue from "@/components/menu/MenuDesktop.vue";
 import MenuMobileVue from "@/components/menu/MenuMobile.vue";
 import FooterMainVue from "@/components/FooterMain.vue";
-import BoxArticleVue from "@/components/boxes/BoxArticle.vue";
 import { credentials } from "@/globals";
 import { getArticles, deleteArticles } from "@/api/index";
-import { Article } from "@/model";
+import type { Article } from "@/model";
 import { results } from "../globals";
-import BtnIcon from "@/components/btn/BtnIcon.vue";
 import useLoadingStore from "@/stores/loading";
-import SpinnerLoad from "@/components/SpinnerLoad.vue";
-import ModalInfo from "../modal/ModalInfo.vue";
-import FrameView from "./FrameView.vue";
-import useUserStore from "@/stores/user";
-import router from "@/router";
 
 export default defineComponent({
   components: {
     MenuDesktopVue,
     MenuMobileVue,
     FooterMainVue,
-    BoxArticleVue,
-    BtnIcon,
-    SpinnerLoad,
-    ModalInfo,
-    FrameView,
+  },
+  props: {
+    articles: Object as PropType<Article[]>,
   },
   setup() {
     const articles = ref<Article[]>([]);
@@ -67,7 +41,6 @@ export default defineComponent({
     const loadingStore = useLoadingStore();
     const visibleModalDelete = ref<boolean>(false);
     const selectedArt = ref<string>("");
-    const userStore = useUserStore();
 
     const search = (
       str: string,
@@ -119,12 +92,6 @@ export default defineComponent({
       selectedArt.value = id;
       visibleModalDelete.value = true;
     };
-
-    const handleEdit = (id: string) => {
-      userStore.saveArticle(id);
-      router.push("/form");
-    };
-
     const handleCloseModal = () => (visibleModalDelete.value = false);
     const handleAcceptModal = () => {
       visibleModalDelete.value = false;
@@ -159,7 +126,6 @@ export default defineComponent({
       credentials,
       visibleModalDelete,
       handleDelete,
-      handleEdit,
       handleCloseModal,
       handleAcceptModal,
     };
@@ -173,17 +139,14 @@ export default defineComponent({
 
 <style lang="stylus" module>
 @import "../assets/base"
-.bodyContent
+.cont
   display flex
-  gap pd-md
-  align-content flex-start
-  justify-content center
-  flex-wrap wrap
-.loading
-  display flex
-  align-items center
-  justify-content center
-.bodyBottom
-  display flex
-  justify-content center
+  flex-direction column
+  justify-content space-between
+  .body
+    padding pd-md
+    flex-basis calc(100vh - 148px)
+    display flex
+    flex-direction column
+    gap pd-md
 </style>

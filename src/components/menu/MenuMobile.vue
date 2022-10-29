@@ -10,7 +10,12 @@ div(:class="$style.outer")
         :icon="['fas', 'magnifying-glass']",
         @click="handleClickSearch"
       )
-      BtnIconNoBack(type="a", size="md", :icon="['fas', 'circle-plus']")
+      BtnIconNoBack(
+        type="a", 
+        size="md", 
+        :icon="['fas', 'circle-plus']" 
+        @click="handleNewArticle"
+      )
       BtnIconNoBack(
         type="a",
         size="md",
@@ -66,6 +71,7 @@ import { defineComponent, ref } from "vue";
 import { BtnIcon, BtnIconNoBack } from "../btn";
 import SquareIcon from "../SquareIcon.vue";
 import SwTypeForm from "../sw/SwTypeForm.vue";
+import router from "@/router";
 
 export default defineComponent({
   components: { BtnIcon, BtnIconNoBack, SwTypeForm, SquareIcon },
@@ -92,6 +98,7 @@ export default defineComponent({
       emit("search", searchValue.value);
       isVisibleSearch.value = false;
     };
+    const handleNewArticle = () => router.push("/form");
     return {
       isVisibleSearch,
       isVisibleMenu,

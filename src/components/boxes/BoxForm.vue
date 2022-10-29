@@ -27,12 +27,6 @@ div(:class="$style.cont")
       )
   div(:class="$style.btns")
     BtnIcon(
-      label="Delete",
-      :icon="['fas', 'circle-xmark']",
-      size="md",
-      type="b"
-    )
-    BtnIcon(
       label="Save",
       :icon="['fas', 'circle-check']",
       size="md",
@@ -93,6 +87,7 @@ export default defineComponent({
 <style lang="stylus" module>
 @import "../../assets/base"
 .cont
+  flex-basis 900px
   .form
     display flex
     flex-direction column
@@ -117,4 +112,5 @@ export default defineComponent({
     display flex
     justify-content end
     gap pd-md
+    flex-direction row-reverse
 </style>

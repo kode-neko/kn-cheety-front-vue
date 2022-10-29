@@ -34,7 +34,10 @@ export default defineComponent({
   padding pd-md
   background-color color-dark
   border-radius br-md
-  width 460px
+  input.title
+    padding 0
+    &:focus
+        outline none
   .title
     font-size 24px
     color color-main

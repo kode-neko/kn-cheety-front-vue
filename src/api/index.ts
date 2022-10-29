@@ -1,2 +1,8 @@
 export { getUser } from "./userApi";
-export { getArticles, deleteArticles } from "./articleApi";
+export {
+  getArticles,
+  getArticle,
+  createArticle,
+  updateArticle,
+  deleteArticles,
+} from "./articleApi";

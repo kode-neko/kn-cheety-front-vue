@@ -31,6 +31,7 @@ export default defineComponent({
     });
     return { article };
   },
+  mounted() {},
   unmounted() {
     const userStore = useUserStore();
     userStore.deleteArticle();

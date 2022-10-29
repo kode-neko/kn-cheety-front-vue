@@ -1,5 +1,6 @@
 import { apiUrlList } from "@/globals";
-import type { Article } from "@/model";
+import type { Article, IArticle } from "@/model";
+import { createHeaderToken } from "@/utils";
 import useUserStore from "../stores/user";
 
 function getArticles(
@@ -7,34 +8,72 @@ function getArticles(
   limit: number,
   skip: number
 ): Promise<Article[]> {
-  const store = useUserStore();
-  const token = store.getToken;
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleFind}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: createHeaderToken(),
     },
     body: JSON.stringify({ tags, skip, limit }),
   })
     .then((data) => data.json())
     .then((data) => data);
-  // .catch((err) => err);
+}
+
+function getArticle(id: string): Promise<IArticle> {
+  return fetch(
+    `${import.meta.env.VITE_API_URL}${apiUrlList.articleGet}/${id}`,
+    {
+      method: "GET",
+      headers: { Authorization: createHeaderToken() },
+    }
+  )
+    .then((data) => data.json())
+    .then((data) => data);
+}
+
+function createArticle(article: IArticle): Promise<IArticle> {
+  return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleCreate}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: createHeaderToken(),
+    },
+    body: JSON.stringify(article),
+  })
+    .then((data) => data.json())
+    .then((data) => data);
+}
+
+function updateArticle(article: Partial<IArticle>): Promise<IArticle> {
+  return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleUpdate}`, {
+    method: "UPDATE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: createHeaderToken(),
+    },
+    body: JSON.stringify(article),
+  })
+    .then((data) => data.json())
+    .then((data) => data);
 }
 
 function deleteArticles(id: string): Promise<boolean> {
-  const store = useUserStore();
-  const token = store.getToken;
   return fetch(
     `${import.meta.env.VITE_API_URL}${apiUrlList.articleDelete}/${id}`,
     {
       method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: createHeaderToken() },
     }
   )
     .then((data) => data.json())
     .then((data) => data.affected > 0);
-  // .catch((err) => err);
 }
 
-export { getArticles, deleteArticles };
+export {
+  getArticles,
+  getArticle,
+  createArticle,
+  updateArticle,
+  deleteArticles,
+};

@@ -175,10 +175,13 @@ export default defineComponent({
 @import "../assets/base"
 .bodyContent
   display flex
-  gap pd-md
-  align-content flex-start
+  gap 20px
+  align-content center
   justify-content center
+  align-items stretch
   flex-wrap wrap
+  &>div
+    flex-basis 400px
 .loading
   display flex
   align-items center

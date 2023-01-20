@@ -10,9 +10,9 @@ interface IArticleForm {
   tags: Array<string>;
 }
 
-function articleFormToIArticle(artForm: IArticleForm): IArticle {
+function toArticle(artForm: IArticleForm): IArticle {
   return {
-    id: artForm.id,
+    id: artForm.id || undefined,
     title: artForm.title,
     content:
       artForm.type === ArticleFormType.List
@@ -24,19 +24,5 @@ function articleFormToIArticle(artForm: IArticleForm): IArticle {
   } as IArticle;
 }
 
-function articleFormToIArticleForm(art: IArticle): IArticleForm {
-  return {
-    id: art.id,
-    title: art.title,
-    type:
-      typeof art.content === "string"
-        ? ArticleFormType.Text
-        : ArticleFormType.List,
-    contentList: typeof art.content === "string" ? undefined : art.content,
-    content: typeof art.content === "string" ? art.content : undefined,
-    tags: art.tags,
-  } as IArticleForm;
-}
-
 export type { IArticleForm };
-export { articleFormToIArticle, articleFormToIArticleForm };
+export { toArticle };

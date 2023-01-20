@@ -46,7 +46,7 @@ function createArticle(article: IArticle): Promise<IArticle> {
 
 function updateArticle(article: Partial<IArticle>): Promise<IArticle> {
   return fetch(`${import.meta.env.VITE_API_URL}${apiUrlList.articleUpdate}`, {
-    method: "UPDATE",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: createHeaderToken(),

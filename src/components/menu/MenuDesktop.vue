@@ -70,6 +70,7 @@ import { BtnIcon, BtnIconNoBack } from "../btn";
 import router from "@/router";
 import SquareIcon from "../SquareIcon.vue";
 import SwTypeForm from "../sw/SwTypeForm.vue";
+import useUserStore from "@/stores/user";
 
 export default defineComponent({
   components: { BtnIcon, BtnIconNoBack, SwTypeForm, SquareIcon },
@@ -88,7 +89,11 @@ export default defineComponent({
     };
     const isVisibleSearch = ref<boolean>(false);
     const isVisibleSocial = ref<boolean>(false);
-    const logout = () => router.push("/login");
+    const logout = () => {
+      const userStore = useUserStore();
+      userStore.deleteState();
+      router.push("/login");
+    };
     const handleNewArticle = () => router.push("/form");
     return {
       searchValue,

@@ -45,10 +45,9 @@ import BoxBase from "./BoxBase.vue";
 import SwTypeForm from "@/components/sw/SwTypeForm.vue";
 import InputTagList from "@/components/InputTagList.vue";
 import InputAddList from "@/components/InputAddList.vue";
-import { IArticleForm } from "@/model";
 import { BtnIcon } from "@/components/btn";
 import { defineComponent, ref, PropType, watch } from "vue";
-import { articleFormToIArticle, ArticleFormType } from "../../model";
+import { ArticleFormType, IArticleForm, toArticle } from "../../model";
 
 export default defineComponent({
   components: {
@@ -85,7 +84,7 @@ export default defineComponent({
       emit("delete");
     };
     const handleSave = () => {
-      const articleSaved = articleFormToIArticle(afState.value);
+      const articleSaved = toArticle(afState.value);
       emit("save", articleSaved);
     };
     watch(

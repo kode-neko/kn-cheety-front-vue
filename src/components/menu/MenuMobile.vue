@@ -2,7 +2,8 @@
 div(:class="$style.outer")
   div(:class="$style.cont")
     div(:class="$style.left")
-      h1 CT
+      router-link(to="/main")
+        h1 CT
     div(:class="$style.right")
       BtnIconNoBack(
         type="a",
@@ -37,16 +38,14 @@ div(:class="$style.outer")
       )
   Transition(name="menu-bars")
     div(v-if="isVisibleMenu", :class="$style.dropMenu")
-      div(:class="$style.a")
-        div
-          BtnIconNoBack(
-            type="c",
-            size="sm",
-            label="contactar",
-            :icon="['far', 'envelope']",
-            :class="$style.icon",
-            @click="handleClickContact"
-          )
+      div(:class="[$style.a, $style.cursor]", @click="logout")
+        BtnIconNoBack(
+          type="c",
+          size="sm",
+          label="logout",
+          :icon="['fas', 'arrow-right-from-bracket']"
+          @click="logout"
+        )
       div(:class="$style.a")
         SwTypeForm(
           :valLeft="'moon'",
@@ -72,6 +71,7 @@ import { BtnIcon, BtnIconNoBack } from "../btn";
 import SquareIcon from "../SquareIcon.vue";
 import SwTypeForm from "../sw/SwTypeForm.vue";
 import router from "@/router";
+import useUserStore from "@/stores/user";
 
 export default defineComponent({
   components: { BtnIcon, BtnIconNoBack, SwTypeForm, SquareIcon },
@@ -98,6 +98,11 @@ export default defineComponent({
       emit("search", searchValue.value);
       isVisibleSearch.value = false;
     };
+    const logout = () => {
+      const userStore = useUserStore();
+      userStore.deleteState();
+      router.push("/login");
+    };
     const handleNewArticle = () => router.push("/form");
     return {
       isVisibleSearch,
@@ -109,6 +114,8 @@ export default defineComponent({
       handleClickSocial,
       handleSearch,
       socialList,
+      logout,
+      handleNewArticle,
     };
   },
 });
@@ -181,6 +188,8 @@ export default defineComponent({
   z-index 2
   border 1px solid color-dark
   box-sizing border-box
+  .cursor
+    cursor pointer
   .a
     background-color color-main
     padding pd-md

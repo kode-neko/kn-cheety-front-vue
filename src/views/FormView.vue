@@ -3,7 +3,6 @@ FrameView(:search="searchInput")
   template(#form)
     div(:class="$style.cont")
       BoxForm(:article="articleForm", @save="handleSave")
-    
 </template>
 
 <script lang="ts">
@@ -13,12 +12,13 @@ import FrameView from "./FrameView.vue";
 import { BoxForm } from "@/components/boxes";
 import {
   ArticleFormType,
-  articleToIArticleForm,
   IArticle,
   IArticleForm,
+  toArticleForm,
 } from "../model";
 import useUserStore from "@/stores/user";
-import { getArticle } from "@/api";
+import { createArticle, getArticle, updateArticle } from "@/api";
+import router from "@/router";
 
 export default defineComponent({
   components: {
@@ -34,7 +34,20 @@ export default defineComponent({
       tags: [],
     });
     const handleSave = (art: IArticle) => {
-      console.log(art);
+      // Update
+      if (art.id) {
+        updateArticle(art)
+          .then((res) => router.push("/main"))
+          .catch((err) => console.log(err));
+      }
+      // Create
+      else {
+        const store = useUserStore();
+        const { user, lang } = store.getUser;
+        createArticle({ ...art, author: user, lang })
+          .then((res) => router.push("/main"))
+          .catch((err) => console.log(err));
+      }
     };
     return { articleForm, handleSave };
   },
@@ -44,7 +57,7 @@ export default defineComponent({
     if (idArticle) {
       getArticle(idArticle)
         .then((art) => {
-          this.articleForm = articleToIArticleForm(art);
+          this.articleForm = toArticleForm(art);
         })
         .catch((err) => console.log(err));
     }

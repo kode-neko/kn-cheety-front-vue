@@ -1,15 +1,15 @@
-version: "2"
+version: "3.9"
+
 services:
-  node:
-    image: "node:16"
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-      - NODE_ENV=production
-    volumes:
-      - ./:/home/node/app
-    expose:
-      - "3000"
-    command: "npx vite --host"
+  cheety-front:
+    image: nginx:latest
     ports:
-      - 3000:3010
+      - 3008:80
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
+    networks:
+      - kn-net
+
+networks:
+  kn-net:
+    driver: bridge

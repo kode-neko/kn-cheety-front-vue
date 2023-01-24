@@ -7,6 +7,9 @@ import vuePugPlugin from "vue-pug-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 3008,
+  },
   plugins: [
     vue({
       template: {

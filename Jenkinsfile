@@ -1,6 +1,12 @@
 pipeline {
   agent any
   stages {
+    stage('dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
     stage('build') {
       steps {
         sh 'npm run build'
@@ -9,7 +15,7 @@ pipeline {
 
     stage('docker') {
       steps {
-        sh 'docker compuse up --detach'
+        sh 'docker compsoe up --detach'
       }
     }
 

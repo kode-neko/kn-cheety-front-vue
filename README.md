@@ -1,59 +1,42 @@
-# cheety
+# KN Cheety Front Vue
 
-This template should help get you started developing with Vue 3 in Vite.
+Welcome Cheety front project 🖥️🦑 This take part of a app for uploading notes and cheat-sheets. I want to a place where I can get together quick knowledges notes for quick reviews.
 
-## Recommended IDE Setup
+---
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin).
+- [KN Cheety Front Vue](#kn-cheety-front-vue)
+  - [🗒️ 1. Description](#️-1-description)
+  - [🛠️ 2. Technologies](#️-2-technologies)
+  - [🖥️ 3. Deploy](#️-3-deploy)
+  - [🤝 4. Contribution](#-4-contribution)
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## 🗒️ 1. Description
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+This project is only the front, specifically, is the Vue version. I want to create a React, Svelte and Angular versions. This is a personal goal, empowering multidisciplinar branches.
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## 🛠️ 2. Technologies
 
-## Customize configuration
+Func ⚙️ | Tech 🛠️
+---|---
+Front-end | Vue
+Build | Vite
+Pack Manager | npm
+Store | Pinia
+i18n | i18next
+Routing | Vue Router 
+Gallery Compo | Storybook
+REST Calls | Axios
+Icons | Font Awesome
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## 🖥️ 3. Deploy
 
-```sh
-npm install
+```bash
+npm run dev:host
 ```
 
-### Compile and Hot-Reload for Development
+## 🤝 4. Contribution
 
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-npm run build
-npm run test:e2e # or `npm run test:e2e:ci` for headless testing
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+If you want to suggest some improvement or inform about a bug, you are welcome 👍 Make an issue and we review it together ✨
